@@ -1,85 +1,22 @@
 Assertions
-  Une requete peut arriver alors qu'on attends une réponse
-    (Par exemple un cycle dans la recherche)
-
   Les messages d'une communication doivent être consommés avant l'envoi d'une
   requête => Si une communication nécessite plusieurs messages, aucun message
   n'appartenant pas à cette communication ne peux s'insérer entre le permier et
   le dernier de cette communication
 
-Types
+  Une requete peut arriver alors qu'on attends une réponse
+    (Par exemple un cycle dans la recherche)
+    On peut utiliser la pile pour différentier les appels (encapsuler l'attente dans une fonction)
 
-  Zone
-    id_noeud
-    minX, maxX
-    minY, maxY
+Questions
 
-  // Liste triée ??
-  // TODO crud
-  ListeZones
-    Zone *v
-    ListeZone *next
+  Que se passe t'il dans le cas d'une insertion de donnée à une coord qui existe
+  déjà ? 
+  - Coord <=> hash ==> unique pour des données distinctes ???
 
-  ListeDonnes
-    int donnee
-    ListeDonnes *next;
 
-  Plage
-    minX, maxX
-    minY, maxY
-
-Types de message
-
-  // requete inserer noeud
-  REQ_INS_ND ()
-  // requete inserer valeur
-  REQ_INS_VAL ()
-  // requete rechercher noeud
-  REQ_RECHERCHE (int noeud_init, int x, int y)
-  // requête diviser la zone en 2
-  REQ_DIVISER ()
-  // Ajouter ou modifier la zone d'un voisin
-  REQ_MAJ_VOISIN (int id, int minX, int maxX, int minY, int maxY)
-  TODO nouveau voisin
-
-  // ack d'insertion
-  REP_INS ()
-  // reponse à une recherche
-  REP_RECHERCHE (int noeud)
-  TODO nouveau voisin
-
-Variables
-
-  int N // nombre de noeuds
-
-  Zone moi
-  int moiX, moiY
-  Zone *vG, *cB, *vD, *vH
-
-Fonctions pour chaque noeud
-
-  attendre_message
-    recevoir message
-    Si type == REQ_INS_ND
-      inserer_noeud
-    Si type == REQ_INS_VAL
-      inserer_val
-    Si type == REQ_RECHERCHE
-      recherche_noeud
-    Sinon
-      retour
-
-  boucle principale
-    generer x et y
-    attendre_message
-
-  lancer_recherche_noeud int x, int y
-    send à 1 REQ_RECHERCHE
-    send id, x, y
-    attendre_message
-    recv &noeud
-
-  recherche_noeud
+Code :
+  algo de routage (pitet' un peu dépassé) :
     recevoir int noeud_init, int nd_x, int nd_y
     si nd_x et nd_y appartiennent au noeud
       envoyer id à noeud_init
@@ -122,46 +59,10 @@ Fonctions pour chaque noeud
               send nd_x, nd_y
             retour
 
-  inserer_noeud
-    Envoyer à 1 REQ_RECHERCHE
-    Envoyer à 1 int id, int x, int y
-    attendre_message
-    Recevoir noeud
-    Envoyer à noeud REQ_DIVISER
-    attendre_message
-    Recevoir minX, maxX, minY, maxY, nvVG, nvVB, nvVD, nvVH
-    Recevoir vG, vB, vD, vH
-    Pour tout v dans vG, vB, vD, vH
-      Envoyer à v REQ_VOISIN
-      Envoyer à v id, minX, maxX, minY, maxY
-
-  diviser
-    /* L'ancien noeud notifie ses voisins de sa nouvelle zone et de la zone du
-    nouveau, il faut bien penser à ajouter le nouveau à l'ancien. Il faudra
-    envoyer comme réponse au nouveau ses voisins, y compris l'ancen noeud */
-    TODO le reste
-
-  nouveau_voisin
-    /* Si l'identifiant fait partie des voisins, on mets à jour la plage, sinon
-    on l'ajoute. Si la nouvelle plage n'est pas limitrophe on le supprime */
-    TODO le reste
-
-  inserer_valeur
-    Envoyer à 1 REQ_RECHERCHE
-    Envoyer à 1 int id, int x, int y
-    attendre_message
-    Recevoir noeud
-    
-
 Fonctions pour le coordinateur
 
   boucle principale
     insérer tous les noeuds
     insérer des valeurs
     rechercher des valeurs
-
-  inserer_valeur
-    Envoyer à 1 REQ_RECHERCHE
-    Envoyer à 1 int x, int y, int val
-    attendre_message
 
