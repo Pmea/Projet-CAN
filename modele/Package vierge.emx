@@ -61,6 +61,7 @@
       <ownedParameter xmi:id="_wVFVUOYHEeSa9Nmb2JavPQ" name="Parameter1" type="_JkFVYOX9EeSa9Nmb2JavPQ" direction="return"/>
     </ownedOperation>
     <ownedOperation xmi:id="_Nl1dIOYJEeSa9Nmb2JavPQ" name="diviser"/>
+    <ownedOperation xmi:id="_tXblgOYUEeS_xOGDIROCrw" name="traiter_maj_zone"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="_JkFVYOX9EeSa9Nmb2JavPQ" name="Zone">
     <ownedAttribute xmi:id="_KyVRMOX9EeSa9Nmb2JavPQ" name="id_noeud" visibility="private">
@@ -82,6 +83,10 @@
   <packagedElement xmi:type="uml:Class" xmi:id="_wuuv8OX9EeSa9Nmb2JavPQ" name="ListeZones">
     <ownedAttribute xmi:id="_yYuzoOX9EeSa9Nmb2JavPQ" name="z" visibility="private" type="_JkFVYOX9EeSa9Nmb2JavPQ"/>
     <ownedAttribute xmi:id="_0ZgYkOX9EeSa9Nmb2JavPQ" name="next" visibility="private" type="_wuuv8OX9EeSa9Nmb2JavPQ"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="_2_JqgOYQEeSm0LJN400AqA" name="MPI">
+    <ownedOperation xmi:id="_ha10gOYQEeSm0LJN400AqA" name="MPI_Send"/>
+    <ownedOperation xmi:id="_Ck1wsOYQEeSm0LJN400AqA" name="MPI_Recv"/>
   </packagedElement>
   <profileApplication xmi:id="_f4dkEuRVEeSR2sdpk-JH-g">
     <eAnnotations xmi:id="_f4dkE-RVEeSR2sdpk-JH-g" source="http://www.eclipse.org/uml2/2.0.0/UML">
