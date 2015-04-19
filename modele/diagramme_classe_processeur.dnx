@@ -87,7 +87,7 @@
     <element xsi:nil="true"/>
     <layoutConstraint xmi:type="notation:Bounds" xmi:id="_FPBnY-YCEeSa9Nmb2JavPQ" x="13860" y="264" width="7274" height="4231"/>
   </children>
-  <children xmi:type="notation:Shape" xmi:id="_sHItMOYSEeSm0LJN400AqA" type="Note" fontName="Ubuntu" fontHeight="8" description="&lt;p>ajouterVoisin et rechercherVoisin manipulent des pointeurs de Zone.&lt;br>?? rechercherVoisin alloue une structure si le voisin n'existe pas ??&lt;/p>" fillColor="13956346" transparency="0" lineColor="12632258" lineWidth="1">
+  <children xmi:type="notation:Shape" xmi:id="_sHItMOYSEeSm0LJN400AqA" type="Note" fontName="Ubuntu" fontHeight="8" description="&lt;p>ajouterVoisin et rechercherVoisin manipulent des pointeurs de Zone.&lt;br>Si le voisin n'existe pas la fonction renvoie NULL&lt;/p>" fillColor="13956346" transparency="0" lineColor="12632258" lineWidth="1">
     <children xmi:type="notation:BasicDecorationNode" xmi:id="_sHJUQOYSEeSm0LJN400AqA" type="DiagramName">
       <element xsi:nil="true"/>
     </children>
