@@ -3,4 +3,4 @@
 
 void diviser(int id_noeud);
 
-#enif /* INSERTION_NOEUD_H */
+#endif /* INSERTION_NOEUD_H */

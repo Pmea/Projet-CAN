@@ -21,7 +21,7 @@ typedef struct zone_t {
   struct zone_t *next;
 } zone;
 
-enum {
+enum tag{
   ACK,
   MAJ_ZONE,
   INIT_ZONE,
@@ -29,6 +29,13 @@ enum {
   REQ_INSERTION_NOEUD,
   REQ_RECHERCHE_VALEUR,
   REQ_INSERTION_VALEUR
+};
+
+enum direction{
+  DROITE;
+  GAUCHE;
+  HAUT;
+  BAS;
 };
 
 zone my_zone;
@@ -42,6 +49,12 @@ void supprimerVoisin(int id, int minX, int maxX, int minY, int maxY);
 int router(int x, int y);
 void diviser(int noeud);
 void attendreMessage(void);
+
+bool est_adjacent(zone* z1, zone* z2);
+direction quel_cote(zone* z1, zone* z2);
+
+void vider_liste_zone(zone* z);
+void ajouter_entete_liste_zone(zone* z, zone* new);
 
 bool traiter_requete_insere_toi(int nd_init);
 bool traiter_requete_insertion_noeud(int id_noeud, int x, int y);
