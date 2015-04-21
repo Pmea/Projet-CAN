@@ -1,5 +1,5 @@
-CC= gcc
-CFLAGS= -Wall -Werror -g 
+CC= mpicc
+CFLAGS= -Wall -Werror 
 SRC= src
 INC= include
 OBJ= obj
