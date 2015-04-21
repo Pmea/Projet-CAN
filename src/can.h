@@ -62,4 +62,6 @@ bool traiter_requete_insertion_valeur(int nd_init, int x, int y, int val);
 bool traiter_requete_recherche_valeur(int nd_init, int x, int y);
 bool traiter_maj_zone(int noeud, int minX, int maxX, int minY, int maxY);
 
+void test_ajout_recherche_suppr_voisins(void);
+
 #endif

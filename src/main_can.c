@@ -157,5 +157,7 @@ void attendreMessage(void) {
 
 int main(int argc, char* argv[]){
 
+  test_ajout_recherche_suppr_voisins();
+
 	return EXIT_SUCCESS;
 }
