@@ -21,7 +21,7 @@ typedef struct zone_t {
   struct zone_t *next;
 } zone;
 
-enum tag{
+typedef enum tag_e{
   ACK,
   MAJ_ZONE,
   INIT_ZONE,
@@ -29,14 +29,14 @@ enum tag{
   REQ_INSERTION_NOEUD,
   REQ_RECHERCHE_VALEUR,
   REQ_INSERTION_VALEUR
-};
+} tag;
 
-enum direction{
-  DROITE;
-  GAUCHE;
-  HAUT;
-  BAS;
-};
+typedef enum direction_e{
+  DROITE,
+  GAUCHE,
+  HAUT,
+  BAS
+} direction;
 
 zone my_zone;
 int my_x;
