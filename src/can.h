@@ -4,6 +4,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <mpi.h>
+
+#define LEN_MAX_MSG 5
 
 typedef struct donnee_t {
   int donnee;

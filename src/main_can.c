@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #include "can.h"
 
 /* Ajoute v à une des liste de voisins */
@@ -77,4 +78,7 @@ void attendreMessage(void) {
   }
 }
 
+int main(int argc, char* argv[]){
 
+	return EXIT_SUCCESS;
+}
