@@ -28,10 +28,15 @@ enum {
   REQ_INSERTION_VALEUR
 };
 
+zone my_zone;
+int my_x;
+int my_y;
+zone *gauche, *bas, *droite, *haut;
+
 bool ajouterVoisin(zone *v);
 zone *rechercheVoisin(int id);
 int router(int x, int y);
-void diviser(void);
+void diviser(int noeud);
 void attendreMessage(void);
 
 bool traiter_requete_insere_toi(int nd_init);
