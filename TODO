@@ -2,7 +2,7 @@ Global
 Moi - bool ajouterVoisin(zone *v);
 Moi - zone *rechercheVoisin(int id);
 int router(int x, int y);
-Moi - void attendreMessage(void);
+done - Moi - void attendreMessage(void);
 
 Insertion noeud
 Pierre - void diviser(int noeud);
