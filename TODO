@@ -1,6 +1,7 @@
 Global
-Moi - bool ajouterVoisin(zone *v);
-Moi - zone *rechercheVoisin(int id);
+done - Moi - bool ajouterVoisin(zone *v);
+done - Moi - zone *rechercheVoisin(int id);
+done - Moi - supprimerVoisin
 int router(int x, int y);
 done - Moi - void attendreMessage(void);
 
