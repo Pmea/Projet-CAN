@@ -21,4 +21,4 @@ $(OBJ)/insertion_noeud.o: $(SRC)/insertion_noeud.c $(SRC)/can.h
 
 
 clean: 
-	rm obj/*.o src/*~ bin/*
+	rm -f obj/*.o src/*~ bin/*
