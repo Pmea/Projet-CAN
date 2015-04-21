@@ -38,6 +38,7 @@ zone *gauche, *bas, *droite, *haut;
 
 bool ajouterVoisin(zone *v);
 zone *rechercheVoisin(int id, int minX, int maxX, int minY, int maxY);
+void supprimerVoisin(int id, int minX, int maxX, int minY, int maxY);
 int router(int x, int y);
 void diviser(int noeud);
 void attendreMessage(void);
