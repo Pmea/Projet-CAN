@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <mpi.h>
 
 typedef struct donnee_t {
   int donnee;

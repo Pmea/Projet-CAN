@@ -5,17 +5,17 @@ INC= include
 OBJ= obj
 BIN= bin
 
-all: $(BIN)/main-can
+all: $(BIN)/main_can
 
 $(BIN)/main_can: $(OBJ)/main_can.o $(OBJ)/insertion_noeud.o 
 	$(CC) -o $@ $^ $(CFLAGS)
 
-$(OBJ)/main_can.o: $(SRC)/main_can.c $(SRC)can.h
+$(OBJ)/main_can.o: $(SRC)/main_can.c $(SRC)/can.h
 	$(CC) -o $@ -c $< -I$(INC) $(CFLAGS)
 
 
 #Etape 1
-$(OBJ)/insertion_noeud.o: $(SRC)/insertion_noeud.c $(SRC)can.h
+$(OBJ)/insertion_noeud.o: $(SRC)/insertion_noeud.c $(SRC)/can.h
 	$(CC) -o $@ -c $< -I$(INC) $(CFLAGS)
 
 
