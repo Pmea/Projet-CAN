@@ -3,6 +3,10 @@
 
 #include "can.h"
 
+
+liste_zone creer_liste(zone * prem);
+void detruire_liste(liste_zone liste);
+
 zone* creer_zone(int id_noeud, int minX, int maxX, int minY, int maxY, zone * next);
 void detruire_zone(zone * z);
 
