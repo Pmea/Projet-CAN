@@ -43,18 +43,12 @@ int my_x;
 int my_y;
 zone *gauche, *bas, *droite, *haut;
 
-bool ajouterVoisin(zone *v);
-zone *rechercheVoisin(int id, int minX, int maxX, int minY, int maxY);
-zone *supprimerVoisin(int id, int minX, int maxX, int minY, int maxY);
+/*les primitives de gestion des voisins sont maintenat dans gestion liste voisin.h*/
+
 int router(int x, int y);
 void diviser(int noeud);
 void attendreMessage(void);
 
-bool est_adjacent(zone* z1, zone* z2);
-direction quel_cote(zone* z1, zone* z2);
-
-void vider_liste_zone(zone* z);
-void ajouter_entete_liste_zone(zone* z, zone* new);
 
 bool traiter_requete_insere_toi(int nd_init);
 bool traiter_requete_insertion_noeud(int id_noeud, int x, int y);
