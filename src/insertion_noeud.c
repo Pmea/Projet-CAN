@@ -41,16 +41,16 @@ void ajouter_entete_liste_zone(zone* z, zone* new){
 	}
 }
 
-// fonctionne 
-bool est_adjacent(zone* z, zone* z2){
-	if((z->maxX == z2->minX -1 ) && (z->minY < z2->maxY && z->maxY > z2->minY)	||			
-		(z2->maxX == z->minX -1 && (z->minY < z2->maxY && z->maxY > z2->minY))	||			
-		(z->maxY == z2->minY -1 && (z->minX < z2->maxX && z->maxX > z2->minX))	||			
-		(z2->maxY == z->minY -1 && (z->minX < z2->maxX && z->maxX > z2->minX))) {
-		return true;
-	}
-	return false;
-}
+/* // fonctionne  */
+/* bool est_adjacent(zone* z, zone* z2){ */
+/* 	if((z->maxX == z2->minX -1 ) && (z->minY < z2->maxY && z->maxY > z2->minY)	||			 */
+/* 		(z2->maxX == z->minX -1 && (z->minY < z2->maxY && z->maxY > z2->minY))	||			 */
+/* 		(z->maxY == z2->minY -1 && (z->minX < z2->maxX && z->maxX > z2->minX))	||			 */
+/* 		(z2->maxY == z->minY -1 && (z->minX < z2->maxX && z->maxX > z2->minX))) { */
+/* 		return true; */
+/* 	} */
+/* 	return false; */
+/* } */
 
 
 void supprimer_voisin_non_adjacent(zone* curs_voisin, zone* my_zone){
