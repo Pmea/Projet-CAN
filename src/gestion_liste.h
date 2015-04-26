@@ -22,6 +22,6 @@ void detruire_liste(zone* v);
 bool est_dans_liste(zone* liste, zone* elem);
 
 // return true si les deux zones ont le même id
-bool est_meme_zone(zone z1, zone z2);
+bool est_meme_element(zone* z1, zone* z2);
 
 #endif /* GESTION_VOISIN_H */
