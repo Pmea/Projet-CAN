@@ -33,7 +33,7 @@ liste_zone get_liste_zone(zone* zone_cible) {
   }
 }
 
-liste_zone get_list_zone_par_coor(int minX, int maxX, int minY, int maxY) {
+liste_zone get_liste_zone_par_coor(int minX, int maxX, int minY, int maxY) {
   if (maxX < my_zone.minX) {
     return gauche;
   } else if (minX > my_zone.maxX) {
@@ -56,7 +56,7 @@ bool est_adjacent(zone* z1, zone* z2) {
 }
 
 void supprimer_zone(liste_zone liste, zone* e_supp) {
-  zone *toFree = NULL, *elt;
+  //zone *toFree = NULL, *elt;
 
   supprimer_element_liste(liste, e_supp);
 
@@ -81,26 +81,27 @@ void supprimer_zone(liste_zone liste, zone* e_supp) {
   /* detruire_zone(e_supp); */
 }
 
-/* void supprimer_voisin_non_adjacent(liste_zonel liste/\* , zone* e_supp *\/) { */
-/*   zone *toFree = NULL, *elt; */
+ void supprimer_voisin_non_adjacent(liste_zone liste, zone* e_supp ) { 
+   zone *toFree = NULL, *elt;  
 
-/*   while(liste->prem &&  */
-/*         !est_adjacent(liste->prem, &my_zone) ) { */
-/*     /\* cas premier elt de la liste *\/ */
-/*     toFree = liste->prem; */
-/*     liste->prem = liste->prem->next; */
-/*     detruire_zone(toFree); */
-/*   }  */
-/*   elt = liste->prem; */
-/*   while (elt) { */
-/*     while(elt && !est_adjacent(elt->next, &my_zone)) { */
-/*       toFree = elt->next; */
-/*       elt->next = elt->next->next; */
-/*       detruire_zone(toFree); */
-/*     } */
-/*     elt = elt->next; */
-/*   } */
-/* } */
+    while(liste->prem &&   
+          !est_adjacent(liste->prem, &my_zone) ) {  
+      /* cas premier elt de la liste */
+      toFree = liste->prem;  
+      liste->prem = liste->prem->next;  
+      detruire_zone(toFree);  
+    }   
+    elt = liste->prem;  
+    while (elt) {  
+      while(elt && !est_adjacent(elt->next, &my_zone)) {  
+        toFree = elt->next;  
+        elt->next = elt->next->next;  
+        detruire_zone(toFree);  
+      }  
+      elt = elt->next;  
+    }  
+  }  
+
 
 zone* get_zone_par_id(liste_zone liste, int id) {
   zone *elt;

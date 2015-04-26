@@ -8,7 +8,7 @@ BIN= bin
 all: $(BIN)/main_can
 
 #Etape 0
-$(OBJ)/gestion_liste.o:  $(SRC)/can.h $(SRC)/gestion_liste.c $(SRC)/gestion_liste.h
+$(OBJ)/gestion_liste.o: $(SRC)/gestion_liste.c $(SRC)/gestion_liste.h $(SRC)/can.h
 	$(CC) -o $@ -c $< -I$(INC) $(CFLAGS)	
 
 $(OBJ)/gestion_voisin.o: $(SRC)/gestion_voisin.c $(SRC)/gestion_voisin.h $(SRC)/can.h
@@ -33,7 +33,7 @@ $(OBJ)/recherche_donnee.o: $(SRC)/recherche_donnee.c  $(SRC)/recherche_donnee.h 
 	$(CC) -o $@ -c $< -I$(INC) $(CFLAGS)
 
 #Final
-$(BIN)/main_can: $(OBJ)/main_can.o $(OBJ)/insertion_noeud.o $(OBJ)/insertion_donnee.o $(OBJ)/recherche_donnee.o $(OBJ)/gestion_liste.o $(OBJ)/gestion_liste.o $(OBJ)/gestion_com.o 
+$(BIN)/main_can: $(OBJ)/main_can.o $(OBJ)/insertion_noeud.o $(OBJ)/insertion_donnee.o $(OBJ)/recherche_donnee.o $(OBJ)/gestion_liste.o $(OBJ)/gestion_voisin.o $(OBJ)/gestion_com.o 
 	$(CC) -o $@ $^ $(CFLAGS)
 
 run: $(BIN)/main_can

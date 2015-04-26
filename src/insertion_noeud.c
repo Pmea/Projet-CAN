@@ -39,7 +39,7 @@ void diviser(int id_noeud){
 				envoyer_tous_liste_a_un(new_zone, MAJ_ZONE, droite);
 
 				vider_liste(droite);
-				ajouter_entete_liste_zone(droite, new_zone);
+				ajouter_entete_liste(droite, new_zone);
 			break;
 		case GAUCHE:
 
@@ -52,7 +52,7 @@ void diviser(int id_noeud){
 				envoyer_tous_liste_a_un(new_zone, MAJ_ZONE, droite);	
 
 				vider_liste(gauche);
-				ajouter_entete_liste_zone(gauche, new_zone);
+				ajouter_entete_liste(gauche, new_zone);
 			break; 
 		case HAUT:
 
@@ -65,7 +65,7 @@ void diviser(int id_noeud){
 				envoyer_tous_liste_a_un(new_zone, MAJ_ZONE, droite);
 
 				vider_liste(haut);
-				ajouter_entete_liste_zone(haut, new_zone);
+				ajouter_entete_liste(haut, new_zone);
 			break;
 		case BAS:
 
@@ -78,7 +78,7 @@ void diviser(int id_noeud){
 				envoyer_tous_liste_a_un(new_zone, MAJ_ZONE, droite);
 
 				vider_liste(bas);
-				ajouter_entete_liste_zone(bas, new_zone);
+				ajouter_entete_liste(bas, new_zone);
 			break;
 		default:
 			printf("Mauvaise direction\n");
@@ -164,6 +164,7 @@ bool traiter_maj_zone(int noeud, int minX, int maxX, int minY, int maxY) {
 }
 
 
+/*
 int main(int argc, char* argv[]){				// fonction de test
 	printf("Fonction de test\n");
 	zone z1,z2;
@@ -189,3 +190,4 @@ int main(int argc, char* argv[]){				// fonction de test
 	printf("test passé avec SUCCES\n");
 	return EXIT_SUCCESS;
 }
+*/
