@@ -3,8 +3,7 @@
 
 #include "can.h"
 
-void creer_zone(int id_noeud, int minX, int maxX, int minY, int maxY, zone * next);
-
+zone* creer_zone(int id_noeud, int minX, int maxX, int minY, int maxY, zone * next);
 void detruire_zone(zone * z);
 
 //ajoute element en tete de la liste
