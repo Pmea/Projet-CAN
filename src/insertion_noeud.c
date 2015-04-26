@@ -1,5 +1,4 @@
 #include "can.h"
-#include "insertion_noeud.h"
 
 //la division marche 
 void diviser(int id_noeud){
@@ -20,93 +19,73 @@ void diviser(int id_noeud){
 
 	afficher_zone(&my_zone);
 	afficher_zone(new_zone);
-/*
-	// mis a jour mes voisins // ajout du nouveux noeud
-	int msg[LEN_MAX_MSG]={ new_zone->id_noeud, new_zone->minX, new_zone->maxX, new_zone->minY, new_zone->maxY};
-	MPI_Send(msg, LEN_MAX_MSG, MPI_INT, id_noeud, INIT_ZONE, MPI_COMM_WORLD);										//prevenir le zone init	
 
-	envoyer_a_tous_element_liste(gauche, new_zone, &my_zone);
-	envoyer_a_tou_element_liste(droite, new_zone, &my_zone);
-	envoyer_a_tous_element_liste(haut, new_zone, &my_zone);
-	envoyer_a_tous_element_liste(bas, new_zone, &my_zone);
-*/
+	// propagation de l'information
+	int msg[LEN_MAX_MSG]={ new_zone->id_noeud, new_zone->minX, new_zone->maxX, new_zone->minY, new_zone->maxY};	
+	envoyer_msg_au_adjacent(gauche, new_zone, msg, INIT_ZONE);
+	envoyer_msg_au_adjacent(droite, new_zone, msg, INIT_ZONE);
+	envoyer_msg_au_adjacent(haut, new_zone, msg, INIT_ZONE);
+	envoyer_msg_au_adjacent(bas, new_zone, msg, INIT_ZONE);
 
-	// -> dispatch voisins 
-	// savoir de quel cote il est
-	// partager voisin
-	// ajouter a ma liste de voir sin
-	/*
-	direction dir;
-	dir= quel_cote( my_zone, new_zone);
-	switch(dir){			// je lui donne mes voisins
+	switch(dequel_cote(&my_zone, new_zone)){			
 		case DROITE:					// l'autre est a droite donc je suis a gauche
-			// partage haut
-			// partage bas
-			envoyer_element_liste(haut, new_zone);
-			envoyer_element_liste(bas, new_zone);
-			envoyer_element_liste(my_zone, new_zone);					
-			envoyer_element_liste(droite, new_zone);
+			
+				envoyer_info_tous_adjacent_a_un(bas, new_zone, MAJ_ZONE);
+				envoyer_info_tous_adjacent_a_un(haut, new_zone, MAJ_ZONE);
 
-			vider_liste_zone(droite);
-			ajouter_entete_liste_zone(droite, new_zone);
-				//revoir ce code
-			supprimer_voisin_non_adjacent(haut, &my_zone);
-			supprimer_voisin_non_adjacent(bas, &my_zone);
+				supprimer_voisin_non_adjacent(bas, &my_zone);
+				supprimer_voisin_non_adjacent(haut, &my_zone);
 
+				envoyer_tous_liste_a_un(new_zone, MAJ_ZONE, droite);
+
+				vider_liste(droite);
+				ajouter_entete_liste_zone(droite, new_zone);
 			break;
 		case GAUCHE:
-			// partage haut
-			// partage bas 
-			envoyer_element_liste(haut, new_zone);
-			envoyer_element_liste(bas, new_zone);
-			envoyer_element_liste(gauche, new_zone);					
-			envoyer_element_liste(my_zone, new_zone);
-			
-			vider_liste_zone(gauche);
-			ajouter_entete_liste_zone(gauche, new_zone);
 
-			// pour tous les voisins H/B on 
-			supprimer_voisin_non_adjacent(haut,&my_zone);
-			supprimer_voisin_non_adjacent(bas, &my_zone);
+				envoyer_info_tous_adjacent_a_un(bas, new_zone, MAJ_ZONE);
+				envoyer_info_tous_adjacent_a_un(haut, new_zone, MAJ_ZONE);
 
+				supprimer_voisin_non_adjacent(bas, &my_zone);
+				supprimer_voisin_non_adjacent(haut, &my_zone);
+
+				envoyer_tous_liste_a_un(new_zone, MAJ_ZONE, droite);	
+
+				vider_liste(gauche);
+				ajouter_entete_liste_zone(gauche, new_zone);
 			break; 
 		case HAUT:
-			// partage droite
-			// partage gauche
-			envoyer_element_liste(haut, new_zone);
-			envoyer_element_liste(my_zone, new_zone);
-			envoyer_element_liste(gauche, new_zone);					
-			envoyer_element_liste(droite, new_zone);
 
-			vider_liste_zone(haut);
-			ajouter_entete_liste_zone(haut, new_zone);
+				envoyer_info_tous_adjacent_a_un(droite, new_zone, MAJ_ZONE);
+				envoyer_info_tous_adjacent_a_un(gauche, new_zone, MAJ_ZONE);
 
-			supprimer_voisin_non_adjacent(gauche, &my_zone);
-			supprimer_voisin_non_adjacent(droite, &my_zone);
+				supprimer_voisin_non_adjacent(droite, &my_zone);
+				supprimer_voisin_non_adjacent(gauche, &my_zone);
 
+				envoyer_tous_liste_a_un(new_zone, MAJ_ZONE, droite);
+
+				vider_liste(haut);
+				ajouter_entete_liste_zone(haut, new_zone);
 			break;
 		case BAS:
-			// partage droite
-			// partage gauche	
-			envoyer_element_liste(my_zone, new_zone);
-			envoyer_element_liste(bas, new_zone);
-			envoyer_element_liste(gauche, new_zone);					
-			envoyer_element_liste(droite, new_zone);
 
-			vider_liste_zone(bas);
-			ajouter_entete_liste_zone(bas, new_zone);	
+				envoyer_info_tous_adjacent_a_un(droite, new_zone, MAJ_ZONE);
+				envoyer_info_tous_adjacent_a_un(gauche, new_zone, MAJ_ZONE);
 
-			supprimer_voisin_non_adjacent(gauche, &my_zone);
-			supprimer_voisin_non_adjacent(droite, &my_zone);
+				supprimer_voisin_non_adjacent(droite, &my_zone);
+				supprimer_voisin_non_adjacent(gauche, &my_zone);
 
+				envoyer_tous_liste_a_un(new_zone, MAJ_ZONE, droite);
+
+				vider_liste(bas);
+				ajouter_entete_liste_zone(bas, new_zone);
 			break;
 		default:
 			printf("Mauvaise direction\n");
 			exit(EXIT_FAILURE);
-	}*/
-
+	}
+	
 	// dispatch  data
-			printf("fin\n");
 }
 
 

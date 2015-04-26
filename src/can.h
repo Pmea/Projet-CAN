@@ -8,6 +8,9 @@
 
 #include <time.h>
 
+#include "gestion_liste.h"
+#include "gestion_voisin.h"
+#include "gestion_com.h"
 
 #define LEN_MAX_MSG 5
 
