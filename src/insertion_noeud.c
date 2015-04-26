@@ -90,12 +90,32 @@ void diviser(int id_noeud){
 
 
 bool traiter_requete_insere_toi(int nd_init) {
-  printf("TODO : traiter_requete_insere_toi\n");
-  return false;
+  /* Envoyer un message insertion noeud au bootstrap, attendre une réponse de
+     type ack et envoyer un ack au coordinateur */
+  int data[LEN_MAX_MSG];
+  data[0] = my_zone.id_noeud;
+  data[1] = my_x;
+  data[2] = my_y;
+
+  envoyer_message(BOOTSTRAP, data, REQ_INSERTION_NOEUD);
+  attendreMessage();
+  printf("J'ai pas envie d'envoyer NULL mais on pourrait y réféchir\n");
+  envoyer_message(COORDINATEUR, data, ACK);
+  return true;
 }
 
 bool traiter_requete_insertion_noeud(int id_noeud, int x, int y) {
   printf("TODO : traiter_requete_insertion_noeud\n");
+  /* Commentaires pour être sur qu'on parle bien de la même chose */
+
+
+
+  /* Si le noeud c'est moi => je me divise (les voisins seront mis à jour) et
+     j'envoie un message de type "ACK" à id_noeud (qui est maintenant un
+     voisin) */
+  /* Sinon, je cherche à qui je devrai envoyer le message (avec router) et je
+     lui envoie un message "REQ_INSERTION_NOEUD" avec id_noeud, x et y */
+  /* Je retourne vrai */
   return false;
 }
 
