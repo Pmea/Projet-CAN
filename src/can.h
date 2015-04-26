@@ -8,6 +8,8 @@
 
 #include <time.h>
 
+#define COORDINATEUR 0
+#define BOOTSTRAP 1
 #define LEN_MAX_MSG 5
 
 typedef struct donnee_t {
@@ -65,7 +67,5 @@ bool traiter_requete_insertion_noeud(int id_noeud, int x, int y);
 bool traiter_requete_insertion_valeur(int nd_init, int x, int y, int val);
 bool traiter_requete_recherche_valeur(int nd_init, int x, int y);
 bool traiter_maj_zone(int noeud, int minX, int maxX, int minY, int maxY);
-
-void test_ajout_recherche_suppr_voisins(void);
 
 #endif
