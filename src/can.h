@@ -49,11 +49,6 @@ int router(int x, int y);
 void diviser(int noeud);
 void attendreMessage(void);
 
-bool est_adjacent(zone* z1, zone* z2);
-direction quel_cote(zone* z1, zone* z2);
-
-void vider_liste_zone(zone* z);
-void ajouter_entete_liste_zone(zone* z, zone* new);
 
 bool traiter_requete_insere_toi(int nd_init);
 bool traiter_requete_insertion_noeud(int id_noeud, int x, int y);
