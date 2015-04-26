@@ -8,6 +8,8 @@
 
 #include <time.h>
 
+#define COORDINATEUR 0
+#define BOOTSTRAP 1
 #define LEN_MAX_MSG 5
 
 typedef struct donnee_t {

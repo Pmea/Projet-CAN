@@ -62,3 +62,9 @@ void envoyer_info_tous_adjacent_a_un(liste_zone liste, zone* dest, int tag_msg){
 		curs= curs->next;
 	}
 } 
+
+void envoyer_message(int noeud, int *data, int tag) {
+  MPI_Send(data, LEN_MAX_MSG, MPI_INT, noeud, tag, MPI_COMM_WORLD);
+}
+
+
