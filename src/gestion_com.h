@@ -18,4 +18,6 @@ void envoyer_info_tous_adjacent_a_un(liste_zone liste, zone* dest, int tag_msg);
 
 void envoyer_message(int noeud, int *data, int tag);
 
+void attendreMessage(void);
+
 #endif /* GESTION_COM_H */
