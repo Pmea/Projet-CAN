@@ -48,14 +48,15 @@ zone *rechercheVoisin(int id, int minX, int maxX, int minY, int maxY) {
 /* supprime le voisin id de la liste des éléments */
 /* Le voisin doit etre un voisin, il n'y a pas de vérification !! */
 /* Plante en affichant une erreur si le voisin n'est pas à sa place */
-void supprimerVoisin(int id, int minX, int maxX, int minY, int maxY) {
+zone* supprimerVoisin(int id, int minX, int maxX, int minY, int maxY) {
   zone *elt, *tmp;
 
   if (maxX < my_zone.minX) {
     if(gauche->id_noeud == id) {
       tmp = gauche;
       gauche = gauche->next;
-      free(tmp);
+      return tmp;
+      /* free(tmp); */
     }
     for(elt = gauche; elt; elt = elt->next) {
       if(!elt->next) {
@@ -65,14 +66,16 @@ void supprimerVoisin(int id, int minX, int maxX, int minY, int maxY) {
       if(elt->next->id_noeud == id) {
         tmp = elt->next;
         elt->next = elt->next->next;
-        free(tmp);
+        return tmp;
+        /* free(tmp); */
       }
     }
   } else if (minX > my_zone.maxX) {
     if(droite->id_noeud == id) {
       tmp = droite;
       droite = droite->next;
-      free(tmp);
+      return tmp;
+      /* free(tmp); */
     }
     for(elt = droite; elt; elt = elt->next) {
       if(!elt->next) {
@@ -82,14 +85,16 @@ void supprimerVoisin(int id, int minX, int maxX, int minY, int maxY) {
       if(elt->next->id_noeud == id) {
         tmp = elt->next;
         elt->next = elt->next->next;
-        free(tmp);
+        return tmp;
+        /* free(tmp); */
       }
     }
   } else if (maxY < my_zone.minY) {
     if(bas->id_noeud == id) {
       tmp = bas;
       bas = bas->next;
-      free(tmp);
+      return tmp;
+      /* free(tmp); */
     }
     for(elt = bas; elt; elt = elt->next) {
       if(!elt->next) {
@@ -99,14 +104,16 @@ void supprimerVoisin(int id, int minX, int maxX, int minY, int maxY) {
       if(elt->next->id_noeud == id) {
         tmp = elt->next;
         elt->next = elt->next->next;
-        free(tmp);
+        return tmp;
+        /* free(tmp); */
       }
     }
   } else /* if (minY > my_zone.maxY) */ {
     if(haut->id_noeud == id) {
       tmp = haut;
       haut = haut->next;
-      free(tmp);
+      return tmp;
+      /* free(tmp); */
     }
     for(elt = haut; elt; elt = elt->next) {
       if(!elt->next) {
@@ -116,11 +123,13 @@ void supprimerVoisin(int id, int minX, int maxX, int minY, int maxY) {
       if(elt->next->id_noeud == id) {
         tmp = elt->next;
         elt->next = elt->next->next;
-        free(tmp);
+        return tmp;
+        /* free(tmp); */
       }
     }
   }
-
+  printf("Suppression : non trouvé !\n");
+  exit(1);
 }
 
 void attendreMessage(void) {
