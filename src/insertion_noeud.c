@@ -17,9 +17,9 @@ void diviser(int id_noeud){
 		new_zone->minY= my_zone.maxY + 1;
 	}
 
-	printf("id: %d\n", new_zone->id_noeud);
-	printf("minX:%d maxX:%d\n", new_zone->minX, new_zone->maxX);
-	printf("minY:%d maxY:%d\n", new_zone->minY, new_zone->maxY);
+
+	afficher_zone(&my_zone);
+	afficher_zone(new_zone);
 /*
 	// mis a jour mes voisins // ajout du nouveux noeud
 	int msg[LEN_MAX_MSG]={ new_zone->id_noeud, new_zone->minX, new_zone->maxX, new_zone->minY, new_zone->maxY};
