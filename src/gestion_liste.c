@@ -1,5 +1,13 @@
 #include "gestion_liste.h"
 
+liste_zone creer_liste(zone * prem){
+	liste_zone l= malloc(sizeof(sizeof(struct liste_zone_t)));
+	l->prem= prem;
+	return l;
+}
+void detruire_liste(liste_zone liste){
+	vider_liste(liste);
+}
 
 zone* creer_zone(int id_noeud, int minX, int maxX, int minY, int maxY, zone * next){
 	zone* new= (zone*) malloc(sizeof(struct zone_t));
@@ -17,15 +25,15 @@ void detruire_zone(zone * z){
 }
 
 void ajouter_entete_liste(liste_zone liste, zone* new_one){
-	new_one->next=liste.prem;
-	liste.prem= new_one;
+	new_one->next=liste->prem;
+	liste->prem= new_one;
 }
 
 void supprimer_entete_liste(liste_zone liste){
-	if(liste.prem== NULL)
+	if(liste->prem== NULL)
 		return;
-	zone * tmp= liste.prem;
-	liste.prem= liste.prem->next;
+	zone * tmp= liste->prem;
+	liste->prem= liste->prem->next;
 	detruire_zone(tmp);
 }
 
@@ -35,7 +43,7 @@ bool est_meme_element(zone* z1, zone* z2){
 
 void supprimer_element_liste(liste_zone liste, zone* zone_supp){
 	zone * prev_curs=NULL;
-	zone* curs= liste.prem;
+	zone* curs= liste->prem;
 	while(curs != NULL){
 		if(est_meme_element(curs, zone_supp) == true){
 			if(prev_curs== NULL)
@@ -51,14 +59,14 @@ void supprimer_element_liste(liste_zone liste, zone* zone_supp){
 	}
 }
 
-void detruire_liste(liste_zone liste){
-	while(liste.prem != NULL){
+void vider_liste(liste_zone liste){
+	while(liste->prem != NULL){
 		supprimer_entete_liste(liste);
 	}
 }
 
 bool est_dans_liste(liste_zone liste, zone* z){
-	zone * curs= liste.prem;
+	zone * curs= liste->prem;
 	while(curs != NULL){
 		if(est_meme_element(curs, z))
 			return true;
@@ -82,19 +90,19 @@ void afficher_zone(zone* z){
 
 void afficher_liste(liste_zone liste){
 	printf("--AFFICHE LISTE--\n");
-	zone* curs= liste.prem;
+	zone* curs= liste->prem;
 	while(curs != NULL){
 		afficher_zone(curs);
 		curs=curs->next;
 	}
 }
-
+/*
 int main(int argc, char* argv[]){
 	printf("TEST unitaire\n");
 	srand(time(NULL));
 
 
-	liste_zone liste;
+	liste_zone liste=creer_liste(NULL);
 	zone* tmp, *tmp2;
 	tmp= creer_zone(1,rand()%100,rand()%100,rand()%100,rand()%100, NULL);
 	tmp2= creer_zone(1,rand()%100,rand()%100,rand()%100,rand()%100, NULL);
@@ -136,12 +144,10 @@ int main(int argc, char* argv[]){
 		printf("N'EST PAS DANS LA LISTE\n");
 	}
 
-
-	detruire_zone(tmp);
-
 	detruire_liste(liste);
 
-
-	printf("FIn test unitaire\n");
+	printf("Fin test unitaire\n");
 	return EXIT_SUCCESS;
 }
+
+*/

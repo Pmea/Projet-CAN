@@ -8,6 +8,7 @@ liste_zone creer_liste(zone * prem);
 void detruire_liste(liste_zone liste);
 
 zone* creer_zone(int id_noeud, int minX, int maxX, int minY, int maxY, zone * next);
+// a t'utiliser que si l'element n'est pas dans une liste
 void detruire_zone(zone * z);
 
 //ajoute element en tete de la liste
@@ -19,8 +20,8 @@ void supprimer_entete_liste(liste_zone liste);
 //supprime un element precis de la liste, si il n'existe pas il ne se passe rien
 void supprimer_element_liste(liste_zone liste, zone* zone_supp);
 
-// detruire la totalité de la liste
-void detruire_liste(liste_zone liste);
+// supprime la totalité de la liste
+void vider_liste(liste_zone liste);
 
 //dit si l'element est dans la liste
 bool est_dans_liste(liste_zone liste, zone* elem);

@@ -4,9 +4,10 @@
 #include "can.h"
 
 // envoi un element a une liste
-void boardcast_element_a_liste(zone* source, zone* elem, liste_zone liste);
+void boardcast_element_a_liste(zone* elem, int tag_msg, liste_zone liste);
 
 // envoi une liste une personne
-void envoyer_tous_liste_a_un(zone* source, zone* dest, liste_zone a_envoyer);
+// cela generer autant de message que d'element dans la liste
+void envoyer_tous_liste_a_un(zone* dest, int tag_msg, liste_zone a_envoyer);
 
 #endif /* GESTION_COM_H */
