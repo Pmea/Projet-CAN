@@ -48,9 +48,9 @@ typedef enum direction_e{
 zone my_zone;
 int my_x;
 int my_y;
+
 liste_zone gauche, bas, droite, haut;
 
-/*les primitives de gestion des voisins sont maintenat dans gestion liste voisin.h*/
 
 int router(int x, int y);
 void diviser(int noeud);

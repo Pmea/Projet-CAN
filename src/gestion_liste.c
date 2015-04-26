@@ -96,7 +96,7 @@ void afficher_liste(liste_zone liste){
 		curs=curs->next;
 	}
 }
-
+/*
 int main(int argc, char* argv[]){
 	printf("TEST unitaire\n");
 	srand(time(NULL));
@@ -149,3 +149,5 @@ int main(int argc, char* argv[]){
 	printf("Fin test unitaire\n");
 	return EXIT_SUCCESS;
 }
+
+*/
