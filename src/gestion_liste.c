@@ -53,14 +53,12 @@ void supprimer_element_liste(zone* liste, zone* zone_supp){
 	}
 }
 
-// detruire la totalité de la liste
 void detruire_liste(zone* liste){
 	while(liste != NULL){
 		supprimer_entete_liste(liste);
 	}
 }
 
-//dit si l'element est dans la liste
 bool element_dans_liste(zone* liste, zone* z){
 	zone * curs= liste;
 	while(curs != NULL){
