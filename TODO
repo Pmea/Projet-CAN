@@ -9,7 +9,7 @@ Insertion noeud
 Pierre - void diviser(int noeud);
 bool traiter_requete_insere_toi(int nd_init);
 bool traiter_requete_insertion_noeud(int id_noeud, int x, int y);
-bool traiter_maj_zone(int noeud, int minX, int maxX, int minY, int maxY);
+Moi - bool traiter_maj_zone(int noeud, int minX, int maxX, int minY, int maxY);
 
 Insertion valeur
 bool traiter_requete_insertion_valeur(int nd_init, int x, int y, int val);
