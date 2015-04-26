@@ -174,4 +174,20 @@ bool est_adjacent(zone z1, zone z2){
 	return false;
 }
 
-	
+
+
+bool traiter_requete_insere_toi(int nd_init) {
+  printf("TODO : traiter_requete_insere_toi\n");
+  return false;
+}
+
+bool traiter_requete_insertion_noeud(int id_noeud, int x, int y) {
+  printf("TODO : traiter_requete_insertion_noeud\n");
+  return false;
+}
+
+bool traiter_maj_zone(int noeud, int minX, int maxX, int minY, int maxY) {
+  printf("TODO : traiter_maj_zone\n");
+  return false;
+}
+
