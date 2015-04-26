@@ -29,4 +29,11 @@ bool est_dans_liste(liste_zone liste, zone* elem);
 // return true si les deux zones ont le même id
 bool est_meme_element(zone* z1, zone* z2);
 
+
+
+//* Debbug *//
+
+void afficher_zone(zone* z);
+void afficher_liste(liste_zone lz);
+
 #endif /* GESTION_VOISIN_H */
