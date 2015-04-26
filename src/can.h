@@ -26,7 +26,7 @@ typedef struct zone_t {
 
 typedef struct liste_zone_t{
   zone * prem;
-} liste_zone;
+} *liste_zone;
 
 typedef enum tag_e{
   ACK,
