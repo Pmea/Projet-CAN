@@ -8,7 +8,6 @@
 
 #include <time.h>
 
-
 #define LEN_MAX_MSG 5
 
 typedef struct donnee_t {
@@ -26,7 +25,7 @@ typedef struct zone_t {
 
 typedef struct liste_zone_t{
   zone * prem;
-} *liste_zone;
+} * liste_zone;
 
 typedef enum tag_e{
   ACK,
@@ -50,6 +49,11 @@ int my_x;
 int my_y;
 
 liste_zone gauche, bas, droite, haut;
+
+// les includes sont en dessous des typedef pour ne pas avoir de probleme de type
+#include "gestion_liste.h"
+#include "gestion_voisin.h"
+#include "gestion_com.h"
 
 
 int router(int x, int y);
