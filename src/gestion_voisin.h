@@ -19,7 +19,7 @@ bool est_adjacent(zone* z1, zone* z2);
 // supprime la zone de la liste, la zone est detruite car un pointeur par zone
 void supprimer_zone(liste_zone liste, zone* e_supp);
 
-void supprimer_voisin_non_adjacent(zone* curs_voisin, zone* my_zone);
+/* void supprimer_voisin_non_adjacent(liste_zone liste, zone* e_supp); */
 
 // cherche dans liste et retourn la zone qui a l'id, NULL sinon
 zone* get_zone_par_id(liste_zone liste, int id);
