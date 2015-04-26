@@ -19,7 +19,7 @@ void supprimer_element_liste(zone* liste, zone* zone_supp);
 void detruire_liste(zone* v);
 
 //dit si l'element est dans la liste
-bool element_dans_liste(zone* liste, zone* elem);
+bool est_dans_liste(zone* liste, zone* elem);
 
 // return true si les deux zones ont le même id
 bool est_meme_zone(zone z1, zone z2);
