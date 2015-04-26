@@ -190,9 +190,53 @@ bool traiter_requete_insertion_noeud(int id_noeud, int x, int y) {
   return false;
 }
 
+/* traiter_maj_zone reçoit l'id du noeud modifié et sa nouvelle zone */
+/* 
+   Si l'id est le notre, on mets à jour nos propres valeurs.  
+   Si l'id est celui d'un voisin, on mets à jour le voisin et on le supprime si
+     ce n'en est plus un 
+   Si l'id n'est pas un voisin, on le créé et on l'ajoute si c'est effectivement
+   un voisin
+*/
 bool traiter_maj_zone(int noeud, int minX, int maxX, int minY, int maxY) {
-  printf("TODO : traiter_maj_zone\n");
-  return false;
+  zone *v;
+  
+  if(noeud == my_zone.id_noeud) {
+    /* Cas ou on mets à jour sa propre zone */
+    my_zone.minX = minX;
+    my_zone.maxX = maxX;
+    my_zone.minY = minY;
+    my_zone.maxY = maxY;
+  } else {
+    /* Cas ou on mets à jour un voisin */
+    v = rechercheVoisin(noeud, minX, maxX, minY, maxY);
+    if(v) {
+      /* Déjà voisin : On le mets à jour */
+      v->minX = minX;
+      v->maxX = maxX;
+      v->minY = minY;
+      v->maxY = maxY;
+      if(!est_adjacent(&my_zone, v)) {
+        /* Si v n'est plus un voisin on le supprime */
+        supprimerVoisin(v->id_noeud, v->minX, v->maxX, v->minY, v->maxY);
+        free(v);
+      }
+    } else {
+      /* Nouveau voisin : on l'ajoute */
+      v = (zone*) malloc(sizeof(zone));
+      v->id_noeud = noeud;
+      v->minX = minX;
+      v->maxX = maxX;
+      v->minY = minY;
+      v->maxY = maxY;
+      if(est_adjacent(&my_zone, v))
+        ajouterVoisin(v);
+      else
+        free(v);
+    }
+  }
+
+  return true;
 }
 
 
