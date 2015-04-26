@@ -48,9 +48,10 @@ void supprimer_element_liste(liste_zone liste, zone* zone_supp){
 		if(est_meme_element(curs, zone_supp) == true){
 			if(prev_curs== NULL)
 				supprimer_entete_liste(liste);
-			else
+			else{
 				prev_curs->next= curs->next;
 				detruire_zone(curs);
+			}
 			return;
 		}
 		

@@ -54,9 +54,8 @@ liste_zone gauche, bas, droite, haut;
 #include "gestion_liste.h"
 #include "gestion_voisin.h"
 #include "gestion_com.h"
+#include "traitement.h"
 
-
-int router(int x, int y);
 void diviser(int noeud);
 void attendreMessage(void);
 

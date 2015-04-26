@@ -24,5 +24,7 @@ void supprimer_zone(liste_zone liste, zone* e_supp);
 // cherche dans liste et retourn la zone qui a l'id, NULL sinon
 zone* get_zone_par_id(liste_zone liste, int id);
 
+// retourne la zone qui a l'id dans tous les voisin, si l'id n'existe pas la fonction retourne NULL
+zone* get_zone_par_id_total(int id);
 
 #endif /* GESTION_VOISIN_H */
