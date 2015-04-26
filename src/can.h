@@ -6,6 +6,9 @@
 #include <stdbool.h>
 #include <mpi.h>
 
+#include <time.h>
+
+
 #define LEN_MAX_MSG 5
 
 typedef struct donnee_t {
@@ -20,6 +23,10 @@ typedef struct zone_t {
   int minY, maxY;
   struct zone_t *next;
 } zone;
+
+typedef struct liste_zone_t{
+  zone * prem;
+} liste_zone;
 
 typedef enum tag_e{
   ACK,
@@ -41,7 +48,7 @@ typedef enum direction_e{
 zone my_zone;
 int my_x;
 int my_y;
-zone *gauche, *bas, *droite, *haut;
+liste_zone gauche, bas, droite, haut;
 
 /*les primitives de gestion des voisins sont maintenat dans gestion liste voisin.h*/
 

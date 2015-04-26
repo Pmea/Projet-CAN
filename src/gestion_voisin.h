@@ -11,7 +11,11 @@ direction dequel_cote(zone* notre_zone, zone* a_placer);
 liste_zone* get_liste_zone(zone* zone_cible);
 
 // retourn la liste où doit se trouver la zone_cible (par id et coordonné)
+<<<<<<< HEAD
 liste_zone* get_liste_zone_par_coor(int minX, int maxX, int minY, int maxY);
+=======
+zone* get_liste_zone_par_coor(int id, int minX, int maxX, int minY, int maxY);
+>>>>>>> ab19a7c4dbbdb6bf907230ba057813b01f50319e
 
 // adjacent, regarde si z1 et z2 son adjacente
 bool est_adjacent(zone* z1, zone* z2);
