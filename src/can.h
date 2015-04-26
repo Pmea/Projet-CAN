@@ -48,7 +48,7 @@ typedef enum direction_e{
 zone my_zone;
 int my_x;
 int my_y;
-zone *gauche, *bas, *droite, *haut;
+liste_zone gauche, bas, droite, haut;
 
 /*les primitives de gestion des voisins sont maintenat dans gestion liste voisin.h*/
 

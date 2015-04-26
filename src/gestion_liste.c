@@ -16,16 +16,16 @@ void detruire_zone(zone * z){
 	free(z);
 }
 
-void ajouter_entete_liste(zone *liste, zone* new_one){
-	new_one->next=liste;
-	liste= new_one;
+void ajouter_entete_liste(liste_zone liste, zone* new_one){
+	new_one->next=liste.prem;
+	liste.prem= new_one;
 }
 
-void supprimer_entete_liste(zone* liste){
-	if(liste== NULL)
+void supprimer_entete_liste(liste_zone liste){
+	if(liste.prem== NULL)
 		return;
-	zone * tmp= liste;
-	liste= liste->next;
+	zone * tmp= liste.prem;
+	liste.prem= liste.prem->next;
 	detruire_zone(tmp);
 }
 
@@ -33,9 +33,9 @@ bool est_meme_element(zone* z1, zone* z2){
 	return z1->id_noeud == z2->id_noeud;
 }
 
-void supprimer_element_liste(zone* liste, zone* zone_supp){
+void supprimer_element_liste(liste_zone liste, zone* zone_supp){
 	zone * prev_curs=NULL;
-	zone* curs= liste;
+	zone* curs= liste.prem;
 	while(curs != NULL){
 		if(est_meme_element(curs, zone_supp) == true){
 			if(prev_curs== NULL)
@@ -51,14 +51,14 @@ void supprimer_element_liste(zone* liste, zone* zone_supp){
 	}
 }
 
-void detruire_liste(zone* liste){
-	while(liste != NULL){
+void detruire_liste(liste_zone liste){
+	while(liste.prem != NULL){
 		supprimer_entete_liste(liste);
 	}
 }
 
-bool est_dans_liste(zone* liste, zone* z){
-	zone * curs= liste;
+bool est_dans_liste(liste_zone liste, zone* z){
+	zone * curs= liste.prem;
 	while(curs != NULL){
 		if(est_meme_element(curs, z))
 			return true;
@@ -80,8 +80,9 @@ void afficher_zone(zone* z){
 	printf("----------------\n");
 }
 
-void afficher_liste(zone* liste){
-	zone* curs= liste;
+void afficher_liste(liste_zone liste){
+	printf("--AFFICHE LISTE--\n");
+	zone* curs= liste.prem;
 	while(curs != NULL){
 		afficher_zone(curs);
 		curs=curs->next;
@@ -93,7 +94,7 @@ int main(int argc, char* argv[]){
 	srand(time(NULL));
 
 
-	zone* liste= NULL;
+	liste_zone liste;
 	zone* tmp, *tmp2;
 	tmp= creer_zone(1,rand()%100,rand()%100,rand()%100,rand()%100, NULL);
 	tmp2= creer_zone(1,rand()%100,rand()%100,rand()%100,rand()%100, NULL);
