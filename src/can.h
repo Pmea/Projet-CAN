@@ -43,9 +43,8 @@ int my_x;
 int my_y;
 zone *gauche, *bas, *droite, *haut;
 
-bool ajouterVoisin(zone *v);
-zone *rechercheVoisin(int id, int minX, int maxX, int minY, int maxY);
-zone *supprimerVoisin(int id, int minX, int maxX, int minY, int maxY);
+/*les primitives de gestion des voisins sont maintenat dans gestion liste voisin.h*/
+
 int router(int x, int y);
 void diviser(int noeud);
 void attendreMessage(void);
