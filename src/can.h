@@ -6,6 +6,9 @@
 #include <stdbool.h>
 #include <mpi.h>
 
+#include <time.h>
+
+
 #define LEN_MAX_MSG 5
 
 typedef struct donnee_t {
