@@ -67,7 +67,7 @@ void envoyer_message(int noeud, int *data, int tag) {
   MPI_Send(data, LEN_MAX_MSG, MPI_INT, noeud, tag, MPI_COMM_WORLD);
 }
 
-void attendreMessage(void) {
+int attendreMessage(void) {
   MPI_Status status;
   int donnees[LEN_MAX_MSG];
   
@@ -80,7 +80,10 @@ void attendreMessage(void) {
 
     switch(status.MPI_TAG) {
     case ACK:
-      return;
+      /* Si une valeur est présente, on la renvoie. S'il n'y a pas de valeur, on
+         la renvoie quand même. Elle sera non pertinente et ignorée par la
+         fonction appelante qui ne cherche pas de retour */
+      return donnees[0];
     case MAJ_ZONE:
       traiter_maj_zone(donnees[0], donnees[1], donnees[2], donnees[3], donnees[4]);
       break;
@@ -102,5 +105,4 @@ void attendreMessage(void) {
     }
   }
 }
-
 
