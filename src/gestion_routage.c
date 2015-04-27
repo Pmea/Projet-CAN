@@ -1,4 +1,4 @@
-#include "traitement.h"
+#include "gestion_routage.h"
 
 #define NB_DIR 4
 
@@ -26,11 +26,11 @@ liste_zone liste_au_hasard_dans_liste(bool *dir_possible){
 
 	int inc=0;
 
-	while(dir_possible[choix + inc] != true){
+	while(dir_possible[(choix + inc) % 4] != true){
 		inc++;
 	}
 
-	switch(choix+inc){
+	switch((choix+inc)%4){
 		case 0:
 			return haut;
 		case 1:
@@ -50,13 +50,13 @@ int routage(int x,  int y){
 	bool dir[NB_DIR]= {false};			// 0:haut, 1:droite, 2:bas, 3:gauche
 
 	if(x > my_x )
-		dir[0]=true;
-	if(x < my_x)
-		dir[2]=true;
-	if(y > my_y)
 		dir[1]=true;
-	if(y < my_y)
+	if(x < my_x)
 		dir[3]=true;
+	if(y > my_y)
+		dir[0]=true;
+	if(y < my_y)
+		dir[2]=true;
 
 	srand(time(NULL));
 
