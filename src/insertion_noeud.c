@@ -9,13 +9,34 @@ void diviser(int id_noeud){
 		my_zone.maxX= my_zone.minX + (my_zone.maxX - my_zone.minX) / 2 - 1;
 		new_zone->minX= my_zone.maxX + 1;
 
-		// ajouter pour lui envoyer la partie ou je ne suis pas 
+		if( x_dans_zone(my_x) == false){
+			// on echange les espaces
+			int minXtmp= my_zone.minX;
+			int maxXtmp= my_zone.maxX;
+
+			my_zone.maxX= new_zone->maxX;
+			my_zone.minX= new_zone->minX;
+
+			new_zone->minX= minXtmp;
+			new_zone->maxX= maxXtmp;
+		}
 	}
 
 	else{
 		printf("DECOUPAGE HORIZONTAL\n");
 		my_zone.maxY= my_zone.minY +(my_zone.maxY- my_zone.minY) / 2 - 1;
 		new_zone->minY= my_zone.maxY + 1;
+
+		if( y_dans_zone(my_y) == false){
+			int minYtmp= my_zone.minY;
+			int maxYtmp= my_zone.maxY;
+
+			my_zone.maxY= new_zone->maxY;
+			my_zone.minY= new_zone->minY;
+
+			new_zone->minY= minYtmp;
+			new_zone->maxY= maxYtmp;
+		}
 	}
 
 
@@ -213,6 +234,8 @@ int main(int argc, char* argv[]){				// fonction de test
 	z2.next= NULL;
 
 	my_zone= z1;
+	my_x= 150;
+	my_y= 350;
 
 	diviser(z2.id_noeud);
 
