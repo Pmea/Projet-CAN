@@ -61,7 +61,6 @@ liste_zone gauche, bas, droite, haut;
 #include "traitement.h"
 
 void diviser(int noeud);
-void attendreMessage(void);
 
 
 bool traiter_requete_insere_toi(int nd_init);
