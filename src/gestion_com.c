@@ -77,7 +77,7 @@ int attendreMessage(void) {
      recevoir un ack puisque si on entre dans attendreMessage, c'est qu'on
      attends une réponse  */
   while(1) {
-    printf("noeud %d : attendre message\n", my_zone.id_noeud);
+    /* printf("noeud %d : attendre message\n", my_zone.id_noeud); */
     MPI_Recv(&donnees, LEN_MAX_MSG, MPI_INT, MPI_ANY_SOURCE, MPI_ANY_TAG, MPI_COMM_WORLD, &status);
 
     switch(status.MPI_TAG) {

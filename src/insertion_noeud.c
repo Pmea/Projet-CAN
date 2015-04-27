@@ -67,7 +67,7 @@ void diviser(int id_noeud){
 
         envoyer_message(new_zone->id_noeud, msg, MAJ_ZONE);
 
-        printf("maj_zone envoyé à %d !!\n", new_zone->id_noeud);
+        /* printf("maj_zone envoyé à %d !!\n", new_zone->id_noeud); */
 
 	switch(dequel_cote(&my_zone, new_zone)){			
 		case DROITE:					// l'autre est a droite donc je suis a gauche

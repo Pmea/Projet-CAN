@@ -26,7 +26,7 @@ void coordinateur(int nb_proc) {
   for(i=1; i<=nb_proc; i++) {
     envoyer_message(i, data, ACK);
   }
-  printf("Fin coord\n");
+  /* printf("Fin coord\n"); */
 }
 
 void noeud(int rang) {
@@ -39,9 +39,10 @@ void noeud(int rang) {
   droite = creer_liste(NULL);
   haut = creer_liste(NULL);
 
-  printf("noeud %d : (%d;%d)\n", rang, my_x, my_y);
+  printf("Début %d : (%d;%d)\n", rang, my_x, my_y);
   attendreMessage();
-  printf("Fin noeud %d\n", rang);
+  printf("  Fin %d : (%d;%d)\n", rang, my_x, my_y);
+  /* printf("Fin noeud %d\n", rang); */
 }
 
 int main(int argc, char* argv[]){
