@@ -8,6 +8,8 @@ void diviser(int id_noeud){
 		printf("DECOUPAGE VERTICAL\n");
 		my_zone.maxX= my_zone.minX + (my_zone.maxX - my_zone.minX) / 2 - 1;
 		new_zone->minX= my_zone.maxX + 1;
+
+		// ajouter pour lui envoyer la partie ou je ne suis pas 
 	}
 
 	else{
@@ -89,6 +91,8 @@ void diviser(int id_noeud){
 }
 
 
+
+
 bool traiter_requete_insere_toi(int nd_init) {
   /* Envoyer un message insertion noeud au bootstrap, attendre une réponse de
      type ack et envoyer un ack au coordinateur */
@@ -104,20 +108,47 @@ bool traiter_requete_insere_toi(int nd_init) {
   return true;
 }
 
-bool traiter_requete_insertion_noeud(int id_noeud, int x, int y) {
-  printf("TODO : traiter_requete_insertion_noeud\n");
-  /* Commentaires pour être sur qu'on parle bien de la même chose */
-
-
-
-  /* Si le noeud c'est moi => je me divise (les voisins seront mis à jour) et
-     j'envoie un message de type "ACK" à id_noeud (qui est maintenant un
-     voisin) */
-  /* Sinon, je cherche à qui je devrai envoyer le message (avec router) et je
-     lui envoie un message "REQ_INSERTION_NOEUD" avec id_noeud, x et y */
-  /* Je retourne vrai */
-  return false;
+bool x_dans_zone(int x){
+	return my_zone.minX < x &&  my_zone.maxX > x;
 }
+bool y_dans_zone(int y){
+ 	return my_zone.minY < y &&  my_zone.maxY > y;
+}
+
+bool point_dans_zone(int x, int y){
+	return x_dans_zone(x) && y_dans_zone(y);
+}
+
+void tirer_point_dans_zone(){
+	while( x_dans_zone(my_x) == false){
+		my_x= rand() % ( my_zone.maxX - my_zone.minX);
+	}
+	while( y_dans_zone(my_y) == false){
+		my_y= rand() % ( my_zone.maxY - my_zone.minY);
+	}
+
+}
+
+bool traiter_requete_insertion_noeud(int id_noeud, int x, int y) {
+  /* Si le noeud c'est moi dans mon espace=> je me divise (les voisins seront mis à jour) et
+     j'envoie un message de type "ACK" au coordinateur (qui est maintenant un
+     voisin) */
+  if(point_dans_zone(x,y) == true){
+  	diviser(id_noeud);
+  	int msgUseless[LEN_MAX_MSG]={0};
+  	envoyer_message(COORDINATEUR, msgUseless, ACK);
+  }
+    /* Sinon, je cherche à qui je devrai envoyer le message (avec router) et je
+     lui envoie un message "REQ_INSERTION_NOEUD" avec id_noeud, x et y */
+  else{
+  	int id_route= routage(x,y);
+  	int msg[LEN_MAX_MSG]={id_noeud, x, y};
+  	envoyer_message(id_route, msg, REQ_INSERTION_NOEUD);
+  }
+
+  return true;
+}
+
 
 /* traiter_maj_zone reçoit l'id du noeud modifié et sa nouvelle zone */
 /* 
@@ -137,6 +168,12 @@ bool traiter_maj_zone(int noeud, int minX, int maxX, int minY, int maxY) {
     my_zone.maxX = maxX;
     my_zone.minY = minY;
     my_zone.maxY = maxY;
+
+    // si le point n'est pas dans ma zone
+    if( point_dans_zone(my_x, my_y) == false){					// on ne doit y passer qu'une seul fois
+    	// on retir jusqu'a qu'il le soit
+		tirer_point_dans_zone();
+	}	
   } else {
     // Cas ou on mets à jour un voisin 
     l = get_liste_zone_par_coor(minX, maxX, minY, maxY);
