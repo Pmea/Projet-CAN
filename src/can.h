@@ -57,6 +57,8 @@ int my_y;
 
 liste_zone gauche, bas, droite, haut;
 
+#define PRINT printf("");
+
 // les includes sont en dessous des typedef pour ne pas avoir de probleme de type
 #include "gestion_liste.h"
 #include "gestion_voisin.h"

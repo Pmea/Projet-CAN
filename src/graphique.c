@@ -1,12 +1,5 @@
 #include "graphique.h"
 
-int jour;
-int mois;
-int annee;
-int heures;
-int minutes;
-int secondes;
-
 /* Appellé seulement une fois par le coordinateur pour débuter un fichier
    html */
 void initialiser_export() {
@@ -68,11 +61,12 @@ void exporter(int nb_noeuds, char *titre) {
   sprintf(nomFichier, "%s%2d_%2d_%2d_%2d_%2d_%2d.html", 
           PREFIXE_FICHIER, jour, mois, annee, heures, minutes, secondes);
 
+
   f = fopen(nomFichier, "a");
   if(nbExport > 1)
-    fprintf(f, "          <input type='radio' name='selecteurEtat' id='selecteurEtat%d'/>\n          <label for='selecteurEtat%d'>\n            <img src='go-previous-5.png' class='fleche flechePrecedent'\n                 alt='flèche précédent' title='afficher l'état précédent' />\n          </label>\n          <label for='selecteurEtat%d'>\n            <img src='go-next-5.png' class='fleche  flecheSuivant'\n                 alt='flèche suivant' title='afficher l'état suivant' />\n          </label>\n          <div class='etat'>\n            <h1> %s </h1>\n\n            <div class='grille'>\n", nbExport, nbExport-1, nbExport, titre);
+    fprintf(f, "          <input type=\"radio\" name=\"selecteurEtat\" id=\"selecteurEtat%d\"/>\n          <label for=\"selecteurEtat%d\">\n            <img src=\"go-previous-5.png\" class=\"fleche flechePrecedent\"\n                 alt=\"flèche précédent\" title=\"afficher l'état précédent\" />\n          </label>\n          <label for=\"selecteurEtat%d\">\n            <img src=\"go-next-5.png\" class=\"fleche  flecheSuivant\"\n                 alt=\"flèche suivant\" title=\"afficher l'état suivant\" />\n          </label>\n          <div class=\"etat\">\n            <h1> %s </h1>\n\n            <div class=\"grille\">\n", nbExport, nbExport-1, nbExport, titre);
   else
-    fprintf(f, "          <input type='radio' name='selecteurEtat' id='selecteurEtat%d'/>\n          <div class='etat'>\n            <h1> %s </h1>\n\n            <div class='grille'>\n", nbExport, titre);
+    fprintf(f, "          <input type=\"radio\" name=\"selecteurEtat\" id=\"selecteurEtat%d\" checked=\"checked\"/>\n          <div class=\"etat\">\n            <h1> %s </h1>\n\n            <div class=\"grille\">\n", nbExport, titre);
 
   if(fclose(f)) {
     perror("fclose ");
@@ -110,6 +104,7 @@ void traiter_export(int jour, int mois, int annee, int heures, int minutes, int 
   sprintf(nomFichier, "%s%2d_%2d_%2d_%2d_%2d_%2d.html", 
           PREFIXE_FICHIER, jour, mois, annee, heures, minutes, secondes);
 
+  /* printf("--%s--\n", nomFichier); */
   nd_left = my_x/2; 
   nd_bottom = my_y/2;
   id = my_zone.id_noeud;
@@ -120,7 +115,7 @@ void traiter_export(int jour, int mois, int annee, int heures, int minutes, int 
 
   f = fopen(nomFichier, "a");
 
-  fprintf(f, "                <div style='left:%dpx; bottom:%dpx;' class='noeud'>%d</div>\n              <div style='width:%dpx; height:%dpx;left:%dpx; bottom:%dpx;' class='zone'></div>\n", nd_left, nd_bottom, id, width, height, left, bottom);
+  fprintf(f, "                <div style='left:%dpx; bottom:%dpx;' class='noeud'>%d</div>\n                <div style='width:%dpx; height:%dpx;left:%dpx; bottom:%dpx;' class='zone'></div>\n\n", nd_left, nd_bottom, id, width, height, left, bottom);
 
   if(fclose(f)) {
     perror("fclose ");

@@ -10,7 +10,8 @@ zone* zone_au_hasard_dans_liste(liste_zone liste){
 		compt++;
 		curs= curs->next;
 	}
-
+        /* printf("LES CANARDS %d\n", compt); */
+        /* afficher_liste(liste); */
 	int choix= rand()% compt;
 	
 	curs= liste->prem;
@@ -22,7 +23,7 @@ zone* zone_au_hasard_dans_liste(liste_zone liste){
 // retourne la liste choisix pour piocher la zone au hasard
 liste_zone liste_au_hasard_dans_liste(bool *dir_possible){
 
-	int choix= rand()% 4;			// le 10 est une variable arbiraire pour ne pas faire trop de boucle
+	int choix= rand()% 4; 
 
 	int inc=0;
 
@@ -49,16 +50,14 @@ liste_zone liste_au_hasard_dans_liste(bool *dir_possible){
 int routage(int x,  int y){
 	bool dir[NB_DIR]= {false};			// 0:haut, 1:droite, 2:bas, 3:gauche
 
-	if(x > my_x )
+	if(x > my_zone.maxX )
 		dir[1]=true;
-	if(x < my_x)
+	if(x < my_zone.minX )
 		dir[3]=true;
-	if(y > my_y)
+	if(y > my_zone.maxY)
 		dir[0]=true;
-	if(y < my_y)
+	if(y < my_zone.minY)
 		dir[2]=true;
-
-	srand(time(NULL));
 
 	liste_zone ltmp= liste_au_hasard_dans_liste(dir);
 	zone * tmp= zone_au_hasard_dans_liste(ltmp);

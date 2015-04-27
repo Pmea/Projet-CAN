@@ -5,7 +5,7 @@ void diviser(int id_noeud){
 	zone* new_zone= creer_zone(id_noeud, my_zone.minX, my_zone.maxX, my_zone.minY, my_zone.maxY, NULL);
 
 	if((my_zone.maxX - my_zone.minX) >= (my_zone.maxY - my_zone.minY) ){			// si largeur plus grand
-		printf("DECOUPAGE VERTICAL\n");
+          //	printf("DECOUPAGE VERTICAL\n");
 		my_zone.maxX= my_zone.minX + (my_zone.maxX - my_zone.minX) / 2 - 1;
 		new_zone->minX= my_zone.maxX + 1;
 
@@ -23,7 +23,7 @@ void diviser(int id_noeud){
 	}
 
 	else{
-		printf("DECOUPAGE HORIZONTAL\n");
+          //	printf("DECOUPAGE HORIZONTAL\n");
 		my_zone.maxY= my_zone.minY +(my_zone.maxY- my_zone.minY) / 2 - 1;
 		new_zone->minY= my_zone.maxY + 1;
 
@@ -40,15 +40,34 @@ void diviser(int id_noeud){
 	}
 
 
-	afficher_zone(&my_zone);
-	afficher_zone(new_zone);
+	/* afficher_zone(&my_zone); */
+	/* afficher_zone(new_zone); */
 
 	// propagation de l'information
 	int msg[LEN_MAX_MSG]={ new_zone->id_noeud, new_zone->minX, new_zone->maxX, new_zone->minY, new_zone->maxY};	
-	envoyer_msg_au_adjacent(gauche, new_zone, msg, INIT_ZONE);
-	envoyer_msg_au_adjacent(droite, new_zone, msg, INIT_ZONE);
-	envoyer_msg_au_adjacent(haut, new_zone, msg, INIT_ZONE);
-	envoyer_msg_au_adjacent(bas, new_zone, msg, INIT_ZONE);
+        /*   printf("gauche : %p\n", gauche);
+        printf("droite : %p\n", droite);
+        printf("bas : %p\n", bas);
+        printf("haut : %p\n", haut);
+        */
+
+        // envoi les coordonnées au nouveau noeud
+        envoyer_message(new_zone->id_noeud, msg, INIT_ZONE);
+
+	envoyer_msg_au_adjacent(gauche, new_zone, msg, MAJ_ZONE);
+	envoyer_msg_au_adjacent(droite, new_zone, msg, MAJ_ZONE);
+	envoyer_msg_au_adjacent(haut, new_zone, msg, MAJ_ZONE);
+	envoyer_msg_au_adjacent(bas, new_zone, msg, MAJ_ZONE);
+
+        msg[0]= my_zone.id_noeud;
+        msg[1]= my_zone.minX;
+        msg[2]= my_zone.maxX;
+        msg[3]= my_zone.minY;
+        msg[4]= my_zone.maxY;
+
+        envoyer_message(new_zone->id_noeud, msg, MAJ_ZONE);
+
+        printf("maj_zone envoyé à %d !!\n", new_zone->id_noeud);
 
 	switch(dequel_cote(&my_zone, new_zone)){			
 		case DROITE:					// l'autre est a droite donc je suis a gauche
@@ -72,7 +91,7 @@ void diviser(int id_noeud){
 				supprimer_voisin_non_adjacent(bas, &my_zone);
 				supprimer_voisin_non_adjacent(haut, &my_zone);
 
-				envoyer_tous_liste_a_un(new_zone, MAJ_ZONE, droite);	
+				envoyer_tous_liste_a_un(new_zone, MAJ_ZONE, gauche);	
 
 				vider_liste(gauche);
 				ajouter_entete_liste(gauche, new_zone);
@@ -85,7 +104,7 @@ void diviser(int id_noeud){
 				supprimer_voisin_non_adjacent(droite, &my_zone);
 				supprimer_voisin_non_adjacent(gauche, &my_zone);
 
-				envoyer_tous_liste_a_un(new_zone, MAJ_ZONE, droite);
+				envoyer_tous_liste_a_un(new_zone, MAJ_ZONE, haut);
 
 				vider_liste(haut);
 				ajouter_entete_liste(haut, new_zone);
@@ -98,7 +117,7 @@ void diviser(int id_noeud){
 				supprimer_voisin_non_adjacent(droite, &my_zone);
 				supprimer_voisin_non_adjacent(gauche, &my_zone);
 
-				envoyer_tous_liste_a_un(new_zone, MAJ_ZONE, droite);
+				envoyer_tous_liste_a_un(new_zone, MAJ_ZONE, bas);
 
 				vider_liste(bas);
 				ajouter_entete_liste(bas, new_zone);
@@ -135,6 +154,8 @@ bool traiter_requete_insere_toi(int nd_init) {
     attendreMessage();
   }
 
+  /* afficher_zone(&my_zone); */
+
   /* Envoyer l'ACK */
   envoyer_message(COORDINATEUR, data, ACK);
   return true;
@@ -146,10 +167,11 @@ bool traiter_requete_insertion_noeud(int id_noeud, int x, int y) {
   /* Si le noeud c'est moi dans mon espace=> je me divise (les voisins seront mis à jour) et
      j'envoie un message de type "ACK" au coordinateur (qui est maintenant un
      voisin) */
+
   if(point_dans_zone(x,y) == true){
   	diviser(id_noeud);
   	int msgUseless[LEN_MAX_MSG]={0};
-  	envoyer_message(COORDINATEUR, msgUseless, ACK);
+  	envoyer_message(id_noeud, msgUseless, ACK);
   }
     /* Sinon, je cherche à qui je devrai envoyer le message (avec router) et je
      lui envoie un message "REQ_INSERTION_NOEUD" avec id_noeud, x et y */
@@ -159,17 +181,21 @@ bool traiter_requete_insertion_noeud(int id_noeud, int x, int y) {
   	envoyer_message(id_route, msg, REQ_INSERTION_NOEUD);
   }
 
+  /* afficher_zone(&my_zone); */
+
   return true;
 }
 
 
 
 void tirer_point_dans_zone(){
-  while( x_dans_zone(my_x) == false){
+  if( x_dans_zone(my_x) == false){
     my_x= rand() % ( my_zone.maxX - my_zone.minX);
+    my_x+= my_zone.minX;
   }
-  while( y_dans_zone(my_y) == false){
-    my_y= rand() % ( my_zone.maxY - my_zone.minY);
+  if( y_dans_zone(my_y) == false){
+    my_y= rand() %  (my_zone.maxY - my_zone.minY);
+    my_y+= my_zone.minY;
   }
 }
 
@@ -194,9 +220,12 @@ bool traiter_maj_zone(int noeud, int minX, int maxX, int minY, int maxY) {
     my_zone.maxY = maxY;
 
     // si le point n'est pas dans ma zone
-    if( point_dans_zone(my_x, my_y) == false){					// on ne doit y passer qu'une seul fois
+    if( point_dans_zone(my_x, my_y) == false){		   // on ne doit y passer qu'une seul fois
     	// on retir jusqu'a qu'il le soit
+      //  printf("\t \t \t  %d avant: %d:%d", my_zone.id_noeud, my_x, my_y);
 		tirer_point_dans_zone();
+                // printf("\t \t \t %d avant: %d:%d", my_zone.id_noeud, my_x, my_y);
+
 	}	
   } else {
     // Cas ou on mets à jour un voisin 
@@ -221,6 +250,7 @@ bool traiter_maj_zone(int noeud, int minX, int maxX, int minY, int maxY) {
         detruire_zone(v);
     }
   }
+  
   return true;
 }
 

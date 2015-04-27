@@ -96,6 +96,8 @@ void afficher_liste(liste_zone liste){
 		afficher_zone(curs);
 		curs=curs->next;
 	}
+	printf("----------------\n");
+
 }
 /*
 int main(int argc, char* argv[]){

@@ -45,6 +45,9 @@ liste_zone get_liste_zone_par_coor(int minX, int maxX, int minY, int maxY) {
 }
 
 bool est_adjacent(zone* z1, zone* z2) {
+  /* afficher_zone(z1); */
+  /* afficher_zone(z2); */
+
   if((z1->maxX == z2->minX -1 && (z1->minY < z2->maxY && z1->maxY > z2->minY)) ||
      (z2->maxX == z1->minX -1 && (z1->minY < z2->maxY && z1->maxY > z2->minY)) || 
      (z1->maxY == z2->minY -1 && (z1->minX < z2->maxX && z1->maxX > z2->minX)) ||
@@ -80,25 +83,38 @@ void supprimer_zone(liste_zone liste, zone* e_supp) {
   /* detruire_zone(e_supp); */
 }
 
- void supprimer_voisin_non_adjacent(liste_zone liste, zone* e_supp ) { 
-   zone *toFree = NULL, *elt;  
+ void supprimer_voisin_non_adjacent(liste_zone liste, zone* z_ref ) { 
+   zone *curs;
+   zone* tmp;
+   curs = liste->prem;
+   while(curs != NULL){
+     if(!est_adjacent(z_ref, curs)){
+       tmp= curs->next;
+       supprimer_element_liste(liste, curs);
+       curs= tmp;
+     }
+     else{
+       curs= curs->next;
+     }  
+   }
 
-    while(liste->prem &&   
-          !est_adjacent(liste->prem, &my_zone) ) {  
-      /* cas premier elt de la liste */
-      toFree = liste->prem;  
-      liste->prem = liste->prem->next;  
-      detruire_zone(toFree);  
-    }   
-    elt = liste->prem;  
-    while (elt) {  
-      while(elt && !est_adjacent(elt->next, &my_zone)) {  
-        toFree = elt->next;  
-        elt->next = elt->next->next;  
-        detruire_zone(toFree);  
-      }  
-      elt = elt->next;  
-    }  
+   /* zone *toFree = NULL, *elt;   */
+    /* while(liste->prem &&    */
+    /*       !est_adjacent(liste->prem, &my_zone) ) {   */
+    /*   /\* cas premier elt de la liste *\/ */
+    /*   toFree = liste->prem;   */
+    /*   liste->prem = liste->prem->next;   */
+    /*   detruire_zone(toFree);   */
+    /* }    */
+    /* elt = liste->prem;   */
+    /* while (elt) {   */
+    /*   while(elt && !est_adjacent(elt->next, &my_zone)) {   */
+    /*     toFree = elt->next;   */
+    /*     elt->next = elt->next->next;   */
+    /*     detruire_zone(toFree);   */
+    /*   }   */
+    /*   elt = elt->next;   */
+    /* }   */
   }  
 
 
@@ -142,10 +158,10 @@ zone* get_zone_par_id_total(int id){
 }
 
 bool x_dans_zone(int x){
-  return my_zone.minX < x &&  my_zone.maxX > x;
+  return my_zone.minX <= x &&  my_zone.maxX >= x;
 }
 bool y_dans_zone(int y){
-  return my_zone.minY < y &&  my_zone.maxY > y;
+  return my_zone.minY <= y &&  my_zone.maxY >= y;
 }
 
 bool point_dans_zone(int x, int y){
