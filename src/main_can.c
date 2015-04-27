@@ -33,16 +33,26 @@ void noeud(int rang) {
   my_x = rand() % (LARGEUR_GRILLE+1); 
    my_y = rand() % (HAUTEUR_GRILLE+1); 
   my_zone.id_noeud = rang;
-  
-  gauche = creer_liste(NULL);
-  bas = creer_liste(NULL);
-  droite = creer_liste(NULL);
+
+  my_donnee= creer_liste_donne(NULL);
+
   haut = creer_liste(NULL);
+  droite = creer_liste(NULL);
+  bas = creer_liste(NULL);
+  gauche = creer_liste(NULL);
 
   printf("Début %d : (%d;%d)\n", rang, my_x, my_y);
   attendreMessage();
   printf("  Fin %d : (%d;%d)\n", rang, my_x, my_y);
   /* printf("Fin noeud %d\n", rang); */
+
+  detruire_liste(haut);
+  detruire_liste(droite);
+  detruire_liste(bas);
+  detruire_liste(gauche);
+
+  detruire_liste_donne(NULL);
+
 }
 
 int main(int argc, char* argv[]){

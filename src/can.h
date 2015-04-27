@@ -59,6 +59,8 @@ zone my_zone;
 int my_x;
 int my_y;
 
+liste_donnee my_donnee;
+
 liste_zone gauche, bas, droite, haut;
 
 #define PRINT printf("");
