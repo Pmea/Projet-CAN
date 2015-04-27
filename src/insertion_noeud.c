@@ -108,26 +108,7 @@ bool traiter_requete_insere_toi(int nd_init) {
   return true;
 }
 
-bool x_dans_zone(int x){
-	return my_zone.minX < x &&  my_zone.maxX > x;
-}
-bool y_dans_zone(int y){
- 	return my_zone.minY < y &&  my_zone.maxY > y;
-}
 
-bool point_dans_zone(int x, int y){
-	return x_dans_zone(x) && y_dans_zone(y);
-}
-
-void tirer_point_dans_zone(){
-	while( x_dans_zone(my_x) == false){
-		my_x= rand() % ( my_zone.maxX - my_zone.minX);
-	}
-	while( y_dans_zone(my_y) == false){
-		my_y= rand() % ( my_zone.maxY - my_zone.minY);
-	}
-
-}
 
 bool traiter_requete_insertion_noeud(int id_noeud, int x, int y) {
   /* Si le noeud c'est moi dans mon espace=> je me divise (les voisins seront mis à jour) et
@@ -147,6 +128,17 @@ bool traiter_requete_insertion_noeud(int id_noeud, int x, int y) {
   }
 
   return true;
+}
+
+
+
+void tirer_point_dans_zone(){
+  while( x_dans_zone(my_x) == false){
+    my_x= rand() % ( my_zone.maxX - my_zone.minX);
+  }
+  while( y_dans_zone(my_y) == false){
+    my_y= rand() % ( my_zone.maxY - my_zone.minY);
+  }
 }
 
 

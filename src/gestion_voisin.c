@@ -1,7 +1,6 @@
 #include "gestion_voisin.h"
 
 
-
 /* Attention, si la cible n'est pas un voisin, le résultat peut être incohérent
    : si la cible est en bas à gauche, elle renverra 'gauche' */
 
@@ -141,6 +140,18 @@ zone* get_zone_par_id_total(int id){
 	}
 	return NULL;
 }
+
+bool x_dans_zone(int x){
+  return my_zone.minX < x &&  my_zone.maxX > x;
+}
+bool y_dans_zone(int y){
+  return my_zone.minY < y &&  my_zone.maxY > y;
+}
+
+bool point_dans_zone(int x, int y){
+  return x_dans_zone(x) && y_dans_zone(y);
+}
+
 
 /* liste_zone gauche; */
 /* liste_zone droite; */
