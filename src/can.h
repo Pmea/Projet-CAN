@@ -38,7 +38,8 @@ typedef enum tag_e{
   REQ_INSERE_TOI,
   REQ_INSERTION_NOEUD,
   REQ_RECHERCHE_VALEUR,
-  REQ_INSERTION_VALEUR
+  REQ_INSERTION_VALEUR,
+  EXPORT
 } tag;
 
 typedef enum direction_e{
