@@ -5,12 +5,14 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <mpi.h>
+#include <string.h>
+#include <time.h>
 
 #include <time.h>
 
 #define COORDINATEUR 0
 #define BOOTSTRAP 1
-#define LEN_MAX_MSG 5
+#define LEN_MAX_MSG 6
 #define HAUTEUR_GRILLE 1000
 #define LARGEUR_GRILLE 1000
 
@@ -60,6 +62,7 @@ liste_zone gauche, bas, droite, haut;
 #include "gestion_voisin.h"
 #include "gestion_com.h"
 #include "gestion_routage.h"
+#include "graphique.h"
 
 void diviser(int noeud);
 

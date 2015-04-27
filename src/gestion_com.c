@@ -102,6 +102,9 @@ int attendreMessage(void) {
     case REQ_RECHERCHE_VALEUR:
       traiter_requete_recherche_valeur(donnees[0], donnees[1], donnees[2]);
       break;
+    case EXPORT:
+      traiter_export(donnees[0], donnees[1], donnees[2], donnees[4], donnees[5], donnees[6]);
+      break;
     }
   }
 }

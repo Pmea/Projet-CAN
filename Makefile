@@ -17,6 +17,9 @@ $(OBJ)/gestion_voisin.o: $(SRC)/gestion_voisin.c $(SRC)/gestion_voisin.h $(SRC)/
 $(OBJ)/gestion_com.o: $(SRC)/gestion_com.c $(SRC)/gestion_com.h $(SRC)/can.h
 	$(CC) -o $@ -c $< -I$(INC) $(CFLAGS)	
 
+$(OBJ)/graphique.o: $(SRC)/graphique.c $(SRC)/graphique.h $(SRC)/can.h
+	$(CC) -o $@ -c $< -I$(INC) $(CFLAGS)	
+
 $(OBJ)/main_can.o: $(SRC)/main_can.c $(SRC)/can.h
 	$(CC) -o $@ -c $< -I$(INC) $(CFLAGS)
 
@@ -33,7 +36,7 @@ $(OBJ)/recherche_donnee.o: $(SRC)/recherche_donnee.c  $(SRC)/recherche_donnee.h 
 	$(CC) -o $@ -c $< -I$(INC) $(CFLAGS)
 
 #Final
-$(BIN)/main_can: $(OBJ)/main_can.o $(OBJ)/insertion_noeud.o $(OBJ)/insertion_donnee.o $(OBJ)/recherche_donnee.o $(OBJ)/gestion_liste.o $(OBJ)/gestion_voisin.o $(OBJ)/gestion_com.o 
+$(BIN)/main_can: $(OBJ)/main_can.o $(OBJ)/insertion_noeud.o $(OBJ)/insertion_donnee.o $(OBJ)/recherche_donnee.o $(OBJ)/gestion_liste.o $(OBJ)/gestion_voisin.o $(OBJ)/gestion_com.o $(OBJ)/graphique.o
 	$(CC) -o $@ $^ $(CFLAGS)
 
 run: $(BIN)/main_can
