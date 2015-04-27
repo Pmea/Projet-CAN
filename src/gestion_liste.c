@@ -1,6 +1,7 @@
 #include "gestion_liste.h"
 
 liste_zone creer_liste(zone * prem){
+	// TODO
 	liste_zone l= malloc(sizeof(sizeof(struct liste_zone_t)));
 	l->prem= prem;
 	return l;

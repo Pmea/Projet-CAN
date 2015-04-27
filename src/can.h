@@ -17,7 +17,7 @@
 #define LARGEUR_GRILLE 1000
 
 typedef struct donnee_t {
-  int donnee;
+  int data;
   int x, y;
   struct donnee_t *next;
 } donnee;
