@@ -93,13 +93,24 @@ bool traiter_requete_insere_toi(int nd_init) {
   /* Envoyer un message insertion noeud au bootstrap, attendre une réponse de
      type ack et envoyer un ack au coordinateur */
   int data[LEN_MAX_MSG];
-  data[0] = my_zone.id_noeud;
-  data[1] = my_x;
-  data[2] = my_y;
 
-  envoyer_message(BOOTSTRAP, data, REQ_INSERTION_NOEUD);
-  attendreMessage();
-  printf("J'ai pas envie d'envoyer NULL mais on pourrait y réféchir\n");
+
+  if(my_zone.id_noeud == BOOTSTRAP) {   /* Cas initial */
+    /* Mettre à jour sa zone */
+    my_zone.minX = 0;
+    my_zone.maxX = LARGEUR_GRILLE;
+    my_zone.minY = 0;
+    my_zone.maxY = HAUTEUR_GRILLE;
+  } else {
+    /* Envoyer la requête d'insertion de noeud et attendre l'ACK */
+    data[0] = my_zone.id_noeud;
+    data[1] = my_x;
+    data[2] = my_y;
+    envoyer_message(BOOTSTRAP, data, REQ_INSERTION_NOEUD);
+    attendreMessage();
+  }
+
+  /* Envoyer l'ACK */
   envoyer_message(COORDINATEUR, data, ACK);
   return true;
 }
