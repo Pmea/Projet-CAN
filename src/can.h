@@ -22,6 +22,10 @@ typedef struct donnee_t {
   struct donnee_t *next;
 } donnee;
 
+typedef struct liste_donnee_t{
+  donnee * prem;
+} * liste_donnee;
+
 typedef struct zone_t {
   int id_noeud;
   int minX, maxX;
@@ -65,6 +69,7 @@ liste_zone gauche, bas, droite, haut;
 #include "gestion_com.h"
 #include "gestion_routage.h"
 #include "graphique.h"
+#include "gestion_donnees.h"
 
 void diviser(int noeud);
 
