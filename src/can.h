@@ -59,7 +59,7 @@ liste_zone gauche, bas, droite, haut;
 #include "gestion_liste.h"
 #include "gestion_voisin.h"
 #include "gestion_com.h"
-#include "traitement.h"
+#include "gestion_routage.h"
 
 void diviser(int noeud);
 
