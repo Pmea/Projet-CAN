@@ -70,6 +70,7 @@ int routage(int x,  int y){
 
 /* DEBBUG */
 
+/*
 int main(int argc, char* argv[]){
 	printf("DEBUT TEST\n");
 
@@ -96,3 +97,4 @@ int main(int argc, char* argv[]){
 	printf("FIN TEST \n");
 	return EXIT_SUCCESS;
 }
+*/

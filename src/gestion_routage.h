@@ -1,9 +1,9 @@
-#ifndef TRAITEMENT_H
-#define TRAITEMENT_H
+#ifndef GESTION_ROUTAGE_H
+#define GESTION_ROUTAGE_H
 
 #include "can.h"
 
 // retourne le noeud dans ses voisins rapprochant le plus de la coordonner
-int router(int x, int y);
+int routage(int x, int y);
 
-#endif /* TRAITEMENT_H */
+#endif /* _H */

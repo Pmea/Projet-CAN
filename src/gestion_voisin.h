@@ -28,4 +28,15 @@ zone* get_zone_par_id(liste_zone liste, int id);
 // retourne la zone qui a l'id dans tous les voisin, si l'id n'existe pas la fonction retourne NULL
 zone* get_zone_par_id_total(int id);
 
+// retourne true si le x est entre mon minX et maxX
+bool x_dans_zone(int x);
+
+// retourne true si le y est entre mon minY et MaxX
+bool y_dans_zone(int y);
+
+// retourne true si les coordonnées ne parametre sont dans ma zone
+bool point_dans_zone(int x, int y);
+
+
+
 #endif /* GESTION_VOISIN_H */
