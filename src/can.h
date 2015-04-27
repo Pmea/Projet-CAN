@@ -11,6 +11,8 @@
 #define COORDINATEUR 0
 #define BOOTSTRAP 1
 #define LEN_MAX_MSG 5
+#define HAUTEUR_GRILLE 1000
+#define LARGEUR_GRILLE 1000
 
 typedef struct donnee_t {
   int donnee;
