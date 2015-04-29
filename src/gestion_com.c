@@ -89,9 +89,9 @@ int attendreMessage(void) {
       /* Si une valeur est présente, on la renvoie. S'il n'y a pas de valeur, on
          la renvoie quand même. Elle sera non pertinente et ignorée par la
          fonction appelante qui ne cherche pas de retour */
-      printf("noeud %d : ACK reçu (%d)\n", my_zone.id_noeud, donnees[0]);
+      printf("noeud %d : ACK reçu (%d)\n", my_zone.id_noeud, donnees[1]);
       /* printf("%d => %d ACK {%d, %d, %d, %d, %d, %d, %d}\n", status.MPI_SOURCE, my_zone.id_noeud, donnees[0], donnees[1], donnees[2], donnees[3], donnees[4], donnees[5], donnees[6]); */
-      return donnees[0];
+      return donnees[1];
     case MAJ_ZONE:
       printf("noeud %d : MAJ_ZONE reçu\n", my_zone.id_noeud);
       /* printf("%d => %d MAJ_Z {%d, %d, %d, %d, %d, %d, %d}\n", status.MPI_SOURCE, my_zone.id_noeud, donnees[0], donnees[1], donnees[2], donnees[3], donnees[4], donnees[5], donnees[6]); */
@@ -121,6 +121,7 @@ int attendreMessage(void) {
       printf("noeud %d : REQ_RECHERCHE_VALEUR reçu\n", my_zone.id_noeud);
       /* printf("%d => %d REQ RECH VAL {%d, %d, %d, %d, %d, %d, %d}\n", status.MPI_SOURCE, my_zone.id_noeud, donnees[0], donnees[1], donnees[2], donnees[3], donnees[4], donnees[5], donnees[6]); */
       traiter_requete_recherche_valeur(donnees[0], donnees[1], donnees[2]);
+
       break;
     case EXPORT:
       printf("noeud %d : EXPORT reçu\n", my_zone.id_noeud);

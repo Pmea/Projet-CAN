@@ -24,6 +24,27 @@ void coordinateur(int nb_proc) {
   }
 
   terminer_export();
+  
+
+  int valx;
+  int valy;
+  int val_calcul;
+
+  for(i=0 ; i<  nb_proc*10; i++){
+    valx= rand()% (LARGEUR_GRILLE+1);
+    valy= rand()% (HAUTEUR_GRILLE+1);
+    printf("DATA [%d;%d]\n", valx, valy);
+    val_calcul= valx + valy;
+    data[0]= COORDINATEUR;
+    data[1]= valx;
+    data[2]= valy;
+    data[3]= val_calcul;
+    //envoyer au bootstramp;
+    envoyer_message(BOOTSTRAP, data, REQ_INSERTION_VALEUR);
+    attendreMessage();
+  }
+
+  // fin du programme 
   for(i=1; i<=nb_proc; i++) {
     envoyer_message(i, data, ACK);
   }
@@ -35,17 +56,38 @@ void noeud(int rang) {
   my_y = rand() % (HAUTEUR_GRILLE+1);
   my_zone.id_noeud = rang;
   est_insere = false;
+/* <<<<<<< HEAD */
   
-  gauche = creer_liste(NULL);
-  bas = creer_liste(NULL);
-  droite = creer_liste(NULL);
+/*   gauche = creer_liste(NULL); */
+/*   bas = creer_liste(NULL); */
+/*   droite = creer_liste(NULL); */
+
+  /*MAIS OU EST PASSÉ MON HAUT ??????*/
+
+/* ======= */
+/* >>>>>>> 195c367bd37b909cac60d848082a471cca71ce35 */
+  my_donnee= creer_liste_donnee(NULL);
   haut = creer_liste(NULL);
+  droite = creer_liste(NULL);
+  bas = creer_liste(NULL);
+  gauche = creer_liste(NULL);
+
 
   printf("Début %d : (%d;%d)\n", rang, my_x, my_y);
   attendreMessage();
   printf("  Fin %d : (%d;%d)\n", rang, my_x, my_y);
   /* printf("Fin noeud %d\n", rang); */
+
+  afficher_liste_donnee_valeur(rang, my_donnee);
+
+  detruire_liste(haut);
+  detruire_liste(droite);
+  detruire_liste(bas);
+  detruire_liste(gauche);
+
+  detruire_liste_donnee(my_donnee);
 }
+
 
 int main(int argc, char* argv[]){
 

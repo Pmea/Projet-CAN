@@ -17,7 +17,7 @@
 #define LARGEUR_GRILLE 1000
 
 typedef struct donnee_t {
-  int donnee;
+  int data;
   int x, y;
   struct donnee_t *next;
 } donnee;
@@ -59,6 +59,7 @@ zone my_zone;
 int my_x;
 int my_y;
 bool est_insere;
+liste_donnee my_donnee;
 liste_zone gauche, bas, droite, haut;
 
 // les includes sont en dessous des typedef pour ne pas avoir de probleme de type
@@ -67,7 +68,7 @@ liste_zone gauche, bas, droite, haut;
 #include "gestion_com.h"
 #include "gestion_routage.h"
 #include "graphique.h"
-/* #include "gestion_donnees.h" */
+#include "gestion_donnees.h"
 
 void diviser(int noeud);
 
