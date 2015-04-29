@@ -145,22 +145,23 @@ bool traiter_requete_insere_toi(int nd_init) {
     my_zone.maxX = LARGEUR_GRILLE;
     my_zone.minY = 0;
     my_zone.maxY = HAUTEUR_GRILLE;
-    data[0] = 1;
+    data[1] = 1;
   } else {
     /* Envoyer la requête d'insertion de noeud et attendre l'ACK */
     data[0] = my_zone.id_noeud;
     data[1] = my_x;
     data[2] = my_y;
     envoyer_message(BOOTSTRAP, data, REQ_INSERTION_NOEUD);
-    data[0] = attendreMessage();
+    data[1] = attendreMessage();
   }
 
   /* afficher_zone(&my_zone); */
 
-  if(data[0])
+  if(data[1])
     est_insere = true;
   /* Envoyer l'ACK. Si l'insertion a échouée data[0] vaut faux */
   /* printf("\t\t\t\t%d ENVOIE %d\n", my_zone.id_noeud, data[0]); */
+  data[0] = COORDINATEUR;
   envoyer_message(COORDINATEUR, data, ACK);
   return true;
 }
@@ -194,7 +195,9 @@ bool traiter_requete_insertion_noeud(int id_noeud, int x, int y) {
       /* printf("REFUSE %d\n", id_noeud); */
       /* printf("%d => %d : REFUSE\n", my_zone.id_noeud, id_noeud); */
       int msg[LEN_MAX_MSG];
-      msg[0] = 0;
+      /* msgUseless[0]= id_noeud; */
+      msg[0] = id_noeud;
+      msg[1] = 0;
       envoyer_message(id_noeud, msg, ACK);
       return false;
     }
