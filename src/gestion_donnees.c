@@ -1,7 +1,20 @@
 #include "gestion_donnees.h"
 
 
-donnee* get_donnee(int x, int y);
+donnee* get_donnee(liste_donnee liste, int x, int y){
+	if(liste == NULL){
+		printf("get donnee: liste ou donnee egale a NULL\n");
+		exit(EXIT_FAILURE);
+	}
+	donnee* curs= liste->prem;
+	while(curs != NULL){
+		if( curs->x == x &&  curs->y == y){
+			return curs;
+		}
+		curs=curs->next;
+	}
+	return NULL;
+}
 
 
 liste_donnee creer_liste_donnee(donnee*  prem){
@@ -121,7 +134,12 @@ void afficher_liste_donnee(liste_donnee liste_d){
 void afficher_liste_donnee_valeur(int id_noeud, liste_donnee liste_d){
 	donnee * curs= liste_d->prem;
 	printf("ID: %d: ", id_noeud);
+	if(curs == NULL){
+		printf("\n");
+		return;
+	}
 	printf("[%d;%d]", curs->x, curs->y);
+	curs=curs->next;
 	while(curs != NULL){
 		printf("->[%d; %d]",curs->x, curs->y);
 		curs=curs->next;

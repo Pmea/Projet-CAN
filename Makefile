@@ -54,6 +54,10 @@ run5: $(BIN)/main_can
 run10: $(BIN)/main_can
 	mpirun -np 10 $<
 
+run100: $(BIN)/main_can
+	mpirun -np 100 $<
+
+
 run200: $(BIN)/main_can
 	mpirun -np 200 $<
 

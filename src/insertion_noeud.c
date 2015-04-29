@@ -171,6 +171,8 @@ bool traiter_requete_insertion_noeud(int id_noeud, int x, int y) {
   if(point_dans_zone(x,y) == true){
   	diviser(id_noeud);
   	int msgUseless[LEN_MAX_MSG]={0};
+    msgUseless[0]= id_noeud;
+    msgUseless[1]= 1;
   	envoyer_message(id_noeud, msgUseless, ACK);
   }
     /* Sinon, je cherche à qui je devrai envoyer le message (avec router) et je

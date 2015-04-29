@@ -3,7 +3,7 @@
 
 #include "can.h"
 
-donnee* get_donnee(int x, int y);
+donnee* get_donnee(liste_donnee liste, int x, int y);
 
 liste_donnee creer_liste_donnee(donnee*  prem);
 void detruire_liste_donnee(liste_donnee liste);

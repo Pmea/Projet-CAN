@@ -86,7 +86,7 @@ int attendreMessage(void) {
          la renvoie quand même. Elle sera non pertinente et ignorée par la
          fonction appelante qui ne cherche pas de retour */
       printf("noeud %d : ACK reçu\n", my_zone.id_noeud);
-      return donnees[0];
+      return donnees[1];
     case MAJ_ZONE:
       printf("noeud %d : MAJ_ZONE reçu\n", my_zone.id_noeud);
       traiter_maj_zone(donnees[0], donnees[1], donnees[2], donnees[3], donnees[4]);
@@ -110,6 +110,7 @@ int attendreMessage(void) {
     case REQ_RECHERCHE_VALEUR:
       printf("noeud %d : REQ_RECHERCHE_VALEUR reçu\n", my_zone.id_noeud);
       traiter_requete_recherche_valeur(donnees[0], donnees[1], donnees[2]);
+
       break;
     case EXPORT:
       printf("noeud %d : EXPORT reçu\n", my_zone.id_noeud);
