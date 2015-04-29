@@ -29,6 +29,8 @@ void coordinateur(int nb_proc) {
   int valy;
   int val_calcul;
 
+  int save_val[10][2];
+
   for(i=0 ; i<  nb_proc*10; i++){
     valx= rand()% (LARGEUR_GRILLE+1);
     valy= rand()% (HAUTEUR_GRILLE+1);
@@ -41,6 +43,27 @@ void coordinateur(int nb_proc) {
     //envoyer au bootstramp;
     envoyer_message(BOOTSTRAP, data, REQ_INSERTION_VALEUR);
     attendreMessage();
+
+    if(i<5){
+      save_val[i][0]=valx;
+      save_val[i][1]=valy;
+    }
+    if( (nb_proc*10 - i) <= 5){
+      save_val[4+ (nb_proc*10 - i)][0]=valx;
+      save_val[4+ (nb_proc*10 - i)][1]=valy;    
+    }
+  }
+
+  int valeur=0;
+  for(i=0; i<10; i++){
+    data[0]= COORDINATEUR;
+    data[1]= save_val[i][0];
+    data[2]= save_val[i][1];
+
+    envoyer_message(BOOTSTRAP, data, REQ_RECHERCHE_VALEUR);
+    valeur= attendreMessage();
+   if(valeur != -1)
+      printf("[%d;%d]=>%d\n", save_val[i][0], save_val[i][1], valeur);
   }
 
   // fin du programme 
@@ -48,6 +71,10 @@ void coordinateur(int nb_proc) {
     envoyer_message(i, data, ACK);
   }
   /* printf("Fin coord\n"); */
+
+  for(i=0; i<10;i++){
+    printf("%d:%d\n", save_val[i][0], save_val[i][1]);
+  }
 }
 
 void noeud(int rang) {

@@ -64,5 +64,5 @@ run200: $(BIN)/main_can
 
 
 
-clean: 
-	rm -f obj/*.o src/*~ bin/*
+clean:
+	rm -f obj/*.o src/*~ bin/* *.html
