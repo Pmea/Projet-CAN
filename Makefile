@@ -48,6 +48,17 @@ $(BIN)/main_can: $(OBJ)/main_can.o $(OBJ)/insertion_noeud.o $(OBJ)/insertion_don
 run: $(BIN)/main_can
 	mpirun -np 10 $<
 
+run5: $(BIN)/main_can
+	mpirun -np 5 $<
+
+run10: $(BIN)/main_can
+	mpirun -np 10 $<
+
+run200: $(BIN)/main_can
+	mpirun -np 200 $<
+
+
+
 
 clean: 
 	rm -f obj/*.o src/*~ bin/*

@@ -4,13 +4,13 @@
 donnee* get_donnee(int x, int y);
 
 
-liste_donnee creer_liste_donne(donnee*  prem){
+liste_donnee creer_liste_donnee(donnee*  prem){
 	liste_donnee ld= (liste_donnee) malloc(sizeof(struct liste_donnee_t));
 	ld->prem= prem;
 	return ld;
 }
 
-void detruire_liste_donne(liste_donnee liste){
+void detruire_liste_donnee(liste_donnee liste){
 	vider_liste_donnee(liste);
 }
 
@@ -29,7 +29,7 @@ void detruire_donnee(donnee *d){
 }
 
 void ajouter_entete_liste_donnee(liste_donnee liste, donnee* new_one){
-	if(liste == NULL || new_one == NULL){
+	if(liste == NULL){
 		printf("ajouter_entete_liste_donnee: liste ou donnee egale a NULL\n");
 		exit(EXIT_FAILURE);
 	}
@@ -38,7 +38,7 @@ void ajouter_entete_liste_donnee(liste_donnee liste, donnee* new_one){
 }
 
 void supprimer_entete_liste_donnee(liste_donnee liste){
-	if(liste == NULL || liste->prem){
+	if(liste == NULL){
 		printf("supprimer_entete_liste_donnee: Liste ou premiere element egal a NULL\n");
 		exit(EXIT_FAILURE);
 	}
@@ -48,8 +48,9 @@ void supprimer_entete_liste_donnee(liste_donnee liste){
 }
 
 void supprimer_element_liste_donnee(liste_donnee liste, donnee* d_supp){
-	if(liste == NULL){
+	if(liste == NULL ){
 		printf("supprimer_element_liste_donnee liste egale a NULL\n");
+		exit(EXIT_FAILURE);
 	}
 	donnee * prev_curs=NULL;
 	donnee * curs= liste->prem;
@@ -70,7 +71,7 @@ void supprimer_element_liste_donnee(liste_donnee liste, donnee* d_supp){
 }
 
 void vider_liste_donnee(liste_donnee liste){
-	if(liste == NULL){
+	if(liste == NULL ){
 		printf("vider_liste_donnee: liste egale a NULL\n");
 		exit(EXIT_FAILURE);
 	}
@@ -97,3 +98,86 @@ bool est_dans_liste_donnee(liste_donnee liste, donnee* elem){
 bool est_meme_donnee(donnee* d1, donnee* d2){
 	return d1->x == d2->x && d1->y == d2->y;
 }
+
+/* DEBUG */
+
+void afficher_donnee(donnee* d){
+	printf("\t--AFFICHE donnee--\n");
+	printf("\t[%d:%d]: %d\n", d->x, d->y, d->data);
+	printf("\tnext %p\n", d->next);
+	printf("\t----------------\n");
+}
+
+void afficher_liste_donnee(liste_donnee liste_d){
+	printf("--AFFICHE LISTE DONNE--\n");
+	donnee * curs= liste_d->prem;
+	while(curs != NULL){
+		afficher_donnee(curs);
+		curs=curs->next;
+	}
+	printf("----------------\n");
+}
+
+void afficher_liste_donnee_valeur(int id_noeud, liste_donnee liste_d){
+	donnee * curs= liste_d->prem;
+	printf("ID: %d: ", id_noeud);
+	printf("[%d;%d]", curs->x, curs->y);
+	while(curs != NULL){
+		printf("->[%d; %d]",curs->x, curs->y);
+		curs=curs->next;
+	}
+	printf("\n");
+}
+
+/*
+int main(int argc, char* argv[]){
+	printf("TEST unitaire\n");
+	srand(time(NULL));
+
+	srand(time(NULL));
+	liste_donnee liste=creer_liste_donnee( NULL);
+	donnee* tmp1= creer_donnee(rand()%10, rand()%10, rand()%100, NULL);
+	donnee* tmp2= creer_donnee(rand()%10, rand()%10, rand()%100, NULL);
+
+
+	if(est_meme_donnee(tmp1, tmp2)== true){
+		printf("EST MEME ELEM\n");
+	}
+	else{
+		printf("N'EST PAS MEME ELEM\n");
+	}
+
+	afficher_donnee(tmp1);
+	ajouter_entete_liste_donnee(liste, tmp1);
+	afficher_liste_donnee(liste);
+	ajouter_entete_liste_donnee(liste, tmp2);
+	afficher_liste_donnee(liste);
+
+	if(est_dans_liste_donnee(liste, tmp1)== true){
+		printf("EST DANS LA LISTE\n");
+	}
+	else{
+		printf("N'EST PAS DANS LA LISTE\n");
+	}
+
+	if(est_dans_liste_donnee(liste, tmp2)== true){
+		printf("EST DANS LA LISTE\n");
+	}
+	else{
+		printf("N'EST PAS DANS LA LISTE\n");
+	}
+
+	supprimer_entete_liste_donnee(liste);
+
+	if(est_dans_liste_donnee(liste, tmp2)== true){
+		printf("EST DANS LA LISTE\n");
+	}
+	else{
+		printf("N'EST PAS DANS LA LISTE\n");
+	}
+
+	detruire_liste_donnee(liste);
+
+	printf("Fin test unitaire\n");
+	return EXIT_SUCCESS;
+}*/
