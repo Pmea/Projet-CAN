@@ -48,10 +48,10 @@ bool est_adjacent(zone* z1, zone* z2) {
   /* afficher_zone(z1); */
   /* afficher_zone(z2); */
 
-  if((z1->maxX == z2->minX -1 && (z1->minY < z2->maxY && z1->maxY > z2->minY)) ||
-     (z2->maxX == z1->minX -1 && (z1->minY < z2->maxY && z1->maxY > z2->minY)) || 
-     (z1->maxY == z2->minY -1 && (z1->minX < z2->maxX && z1->maxX > z2->minX)) ||
-     (z2->maxY == z1->minY -1 && (z1->minX < z2->maxX && z1->maxX > z2->minX))) {
+  if((z1->maxX == z2->minX -1 && (z1->minY <= z2->maxY && z1->maxY >= z2->minY)) ||
+     (z2->maxX == z1->minX -1 && (z1->minY <= z2->maxY && z1->maxY >= z2->minY)) || 
+     (z1->maxY == z2->minY -1 && (z1->minX <= z2->maxX && z1->maxX >= z2->minX)) ||
+     (z2->maxY == z1->minY -1 && (z1->minX <= z2->maxX && z1->maxX >= z2->minX))) {
     return true;
   }
   return false;

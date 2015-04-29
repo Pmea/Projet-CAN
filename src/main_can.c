@@ -2,26 +2,27 @@
 
 void coordinateur(int nb_proc) {
   int data[LEN_MAX_MSG];
-  /* int timestamp[LEN_MAX_MSG]; */
   int i;
   char titre[1024];
 
   initialiser_export();
-  /* timestamp[0] = jour; */
-  /* timestamp[1] = mois; */
-  /* timestamp[2] = annee; */
-  /* timestamp[3] = heures; */
-  /* timestamp[4] = minutes; */
-  /* timestamp[5] = secondes; */
 
   data[0] = COORDINATEUR;
   /* Insertion des noeuds */
   for(i=1; i<=nb_proc; i++) {
     envoyer_message(i, data, REQ_INSERE_TOI);
-    attendreMessage();
+    if(!attendreMessage())
+      printf("\t\t\t\tInsertion échouée : noeud %d\n", i);
+    /* if(!tmp) { */
+    /*   /\* Le noeud n'a pas réussi à s'insérer *\/ */
+    /*   printf("\t\t\t\tLe noeud %d n'a pas été inséré\n", i); */
+    /* } else { */
+    /*   printf("\t\t\t\tLe noeud %d a été inséré\n", i); */
+    /* } */
     sprintf(titre, "Insertion de %d", i);
     exporter(i, titre);
   }
+
   terminer_export();
   for(i=1; i<=nb_proc; i++) {
     envoyer_message(i, data, ACK);
@@ -31,8 +32,9 @@ void coordinateur(int nb_proc) {
 
 void noeud(int rang) {
   my_x = rand() % (LARGEUR_GRILLE+1); 
-   my_y = rand() % (HAUTEUR_GRILLE+1); 
+  my_y = rand() % (HAUTEUR_GRILLE+1);
   my_zone.id_noeud = rang;
+  est_insere = false;
   
   gauche = creer_liste(NULL);
   bas = creer_liste(NULL);

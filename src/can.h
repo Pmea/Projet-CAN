@@ -58,10 +58,8 @@ typedef enum direction_e{
 zone my_zone;
 int my_x;
 int my_y;
-
+bool est_insere;
 liste_zone gauche, bas, droite, haut;
-
-#define PRINT printf("");
 
 // les includes sont en dessous des typedef pour ne pas avoir de probleme de type
 #include "gestion_liste.h"
@@ -69,7 +67,7 @@ liste_zone gauche, bas, droite, haut;
 #include "gestion_com.h"
 #include "gestion_routage.h"
 #include "graphique.h"
-#include "gestion_donnees.h"
+/* #include "gestion_donnees.h" */
 
 void diviser(int noeud);
 

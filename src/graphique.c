@@ -100,6 +100,11 @@ void traiter_export(int jour, int mois, int annee, int heures, int minutes, int 
   int donnees[LEN_MAX_MSG];
   int nd_left, nd_bottom, id, width, height, left, bottom;
 
+  if(!est_insere) {
+    envoyer_message(COORDINATEUR, donnees, ACK);
+    return;
+  }
+
 
   sprintf(nomFichier, "%s%2d_%2d_%2d_%2d_%2d_%2d.html", 
           PREFIXE_FICHIER, jour, mois, annee, heures, minutes, secondes);
