@@ -15,7 +15,7 @@ void initialiser_export() {
   minutes = temps->tm_min;
   secondes = temps->tm_sec;
 
-  sprintf(nomFichier, "%s%2d_%2d_%2d_%2d_%2d_%2d.html", 
+  sprintf(nomFichier, "%s%.2d_%.2d_%.2d_%.2d_%.2d_%.2d.html",
           PREFIXE_FICHIER, jour, mois, annee, heures, minutes, secondes);
 
   f = fopen(nomFichier, "w");
@@ -25,8 +25,8 @@ void initialiser_export() {
   if(fclose(f)) {
     perror("fclose ");
   }
-  
-  
+
+
 }
 
 /* Appellé seulement une fois par le coordinateur pour terminer un fichier
@@ -35,7 +35,7 @@ void terminer_export() {
   FILE *f;
   char nomFichier[strlen(PREFIXE_FICHIER) + strlen("jj_mm_aa_hh_mm_ss.html")+1];
 
-  sprintf(nomFichier, "%s%2d_%2d_%2d_%2d_%2d_%2d.html", 
+  sprintf(nomFichier, "%s%.2d_%.2d_%.2d_%.2d_%.2d_%.2d.html",
           PREFIXE_FICHIER, jour, mois, annee, heures, minutes, secondes);
 
   f = fopen(nomFichier, "a");
@@ -45,7 +45,7 @@ void terminer_export() {
   if(fclose(f)) {
     perror("fclose ");
   }
-  
+
 
 }
 
@@ -58,7 +58,7 @@ void exporter(int nb_noeuds, char *titre) {
   int i;
   int data[LEN_MAX_MSG];
 
-  sprintf(nomFichier, "%s%2d_%2d_%2d_%2d_%2d_%2d.html", 
+  sprintf(nomFichier, "%s%.2d_%.2d_%.2d_%.2d_%.2d_%.2d.html",
           PREFIXE_FICHIER, jour, mois, annee, heures, minutes, secondes);
 
 
@@ -106,11 +106,11 @@ void traiter_export(int jour, int mois, int annee, int heures, int minutes, int 
   }
 
 
-  sprintf(nomFichier, "%s%2d_%2d_%2d_%2d_%2d_%2d.html", 
+  sprintf(nomFichier, "%s%.2d_%.2d_%.2d_%.2d_%.2d_%.2d.html",
           PREFIXE_FICHIER, jour, mois, annee, heures, minutes, secondes);
 
   /* printf("--%s--\n", nomFichier); */
-  nd_left = my_x/2; 
+  nd_left = my_x/2;
   nd_bottom = my_y/2;
   id = my_zone.id_noeud;
   width = (my_zone.maxX - my_zone.minX)/2;
