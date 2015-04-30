@@ -19,12 +19,10 @@ void coordinateur(int nb_proc) {
     /* } else { */
     /*   printf("\t\t\t\tLe noeud %d a été inséré\n", i); */
     /* } */
-    sprintf(titre, "Insertion de %d", i);
+    sprintf(titre, "Insertion du noeud %d", i);
     exporter(i, titre);
   }
 
-  terminer_export();
-  
 
   int valx;
   int valy;
@@ -42,8 +40,13 @@ void coordinateur(int nb_proc) {
     //envoyer au bootstramp;
     envoyer_message(BOOTSTRAP, data, REQ_INSERTION_VALEUR);
     attendreMessage();
+
+    sprintf(titre, "Insertion de la valeur (%d;%d;%d)", valx, valy, val_calcul);
+    exporter(nb_proc, titre);
   }
 
+  terminer_export();
+  
   // fin du programme 
   for(i=1; i<=nb_proc; i++) {
     envoyer_message(i, data, ACK);
