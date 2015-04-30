@@ -40,17 +40,8 @@ void diviser(int id_noeud){
 	}
 
 
-	/* afficher_zone(&my_zone); */
-	/* afficher_zone(new_zone); */
-
 	// propagation de l'information
 	int msg[LEN_MAX_MSG]={ new_zone->id_noeud, new_zone->minX, new_zone->maxX, new_zone->minY, new_zone->maxY};	
-        /*   printf("gauche : %p\n", gauche);
-        printf("droite : %p\n", droite);
-        printf("bas : %p\n", bas);
-        printf("haut : %p\n", haut);
-        */
-
         // envoi les coordonnées au nouveau noeud
         envoyer_message(new_zone->id_noeud, msg, INIT_ZONE);
 
@@ -66,8 +57,6 @@ void diviser(int id_noeud){
         msg[4]= my_zone.maxY;
 
         envoyer_message(new_zone->id_noeud, msg, MAJ_ZONE);
-
-        /* printf("maj_zone envoyé à %d !!\n", new_zone->id_noeud); */
 
 	switch(dequel_cote(&my_zone, new_zone)){			
 		case DROITE:					// l'autre est a droite donc je suis a gauche
@@ -155,12 +144,9 @@ bool traiter_requete_insere_toi(int nd_init) {
     data[1] = attendreMessage();
   }
 
-  /* afficher_zone(&my_zone); */
-
   if(data[1])
     est_insere = true;
   /* Envoyer l'ACK. Si l'insertion a échouée data[0] vaut faux */
-  /* printf("\t\t\t\t%d ENVOIE %d\n", my_zone.id_noeud, data[0]); */
   data[0] = COORDINATEUR;
   envoyer_message(COORDINATEUR, data, ACK);
   return true;
@@ -168,13 +154,6 @@ bool traiter_requete_insere_toi(int nd_init) {
 
 /* Retourne vrai si la zone est assez grande pour être divisée */
 bool est_divisible_zone(zone *z) {
-  /* printf("Noeud %d : %d,%d ; %d,%d", z->id_noeud, z->minX, */
-  /*        z->maxX, z->minY, z->maxY); */
-  /* if(z->maxX - z->minX > 1 || z->maxY - z->minY > 1) */
-  /*   printf(" est divisible\n"); */
-  /* else */
-  /*   printf("n'est pas divisible\n"); */
-
   if(z->maxX - z->minX > 1 || z->maxY - z->minY > 1)
     return true;
   return false;
@@ -185,25 +164,17 @@ bool traiter_requete_insertion_noeud(int id_noeud, int x, int y) {
      j'envoie un message de type "ACK" au coordinateur (qui est maintenant un
      voisin) */
 
-  /* printf("Passage avant\n"); */
   if(point_dans_zone(x,y) == true){
 
-    /* printf("Passage dedans\n"); */
     /* Si la zone n'est pas divisible, on retourne faux au noeud qui cherche à
        s'insérer  */
     if(!est_divisible_zone(&my_zone)) {
-      /* printf("REFUSE %d\n", id_noeud); */
-      /* printf("%d => %d : REFUSE\n", my_zone.id_noeud, id_noeud); */
       int msg[LEN_MAX_MSG];
-      /* msgUseless[0]= id_noeud; */
       msg[0] = id_noeud;
       msg[1] = 0;
       envoyer_message(id_noeud, msg, ACK);
       return false;
     }
-    /* printf("Passage après\n"); */
-    /* printf("ACCEPTE %d\n", id_noeud); */
-    /* printf("%d => %d : ACCEPTE\n", my_zone.id_noeud, id_noeud); */
     diviser(id_noeud);
     int msgUseless[LEN_MAX_MSG]={0};
     msgUseless[0]= id_noeud;
@@ -217,8 +188,6 @@ bool traiter_requete_insertion_noeud(int id_noeud, int x, int y) {
     int msg[LEN_MAX_MSG]={id_noeud, x, y};
     envoyer_message(id_route, msg, REQ_INSERTION_NOEUD);
   }
-
-  /* afficher_zone(&my_zone); */
 
   return true;
 }
@@ -259,9 +228,7 @@ bool traiter_maj_zone(int noeud, int minX, int maxX, int minY, int maxY) {
     // si le point n'est pas dans ma zone
     if( point_dans_zone(my_x, my_y) == false){		   // on ne doit y passer qu'une seul fois
       // on retir jusqu'a qu'il le soit
-      //  printf("\t \t \t  %d avant: %d:%d", my_zone.id_noeud, my_x, my_y);
       tirer_point_dans_zone();
-      // printf("\t \t \t %d avant: %d:%d", my_zone.id_noeud, my_x, my_y);
 
     }	
   } else {

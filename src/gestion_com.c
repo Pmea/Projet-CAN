@@ -65,10 +65,6 @@ void envoyer_info_tous_adjacent_a_un(liste_zone liste, zone* dest, int tag_msg){
 } 
 
 void envoyer_message(int noeud, int *data, int tag) {
-  /* if(tag == ACK) { */
-  /*   printf("%d envoie ACK à %d (%d)\n", my_zone.id_noeud, noeud, data[0]); */
-  /* } */
-
   MPI_Send(data, LEN_MAX_MSG, MPI_INT, noeud, tag, MPI_COMM_WORLD);
 }
 
@@ -81,7 +77,6 @@ int attendreMessage(void) {
      recevoir un ack puisque si on entre dans attendreMessage, c'est qu'on
      attends une réponse  */
   while(1) {
-    /* printf("noeud %d : attendre message\n", my_zone.id_noeud); */
     MPI_Recv(&donnees, LEN_MAX_MSG, MPI_INT, MPI_ANY_SOURCE, MPI_ANY_TAG, MPI_COMM_WORLD, &status);
 
     switch(status.MPI_TAG) {
@@ -90,46 +85,36 @@ int attendreMessage(void) {
          la renvoie quand même. Elle sera non pertinente et ignorée par la
          fonction appelante qui ne cherche pas de retour */
       printf("noeud %d : ACK reçu (%d)\n", my_zone.id_noeud, donnees[1]);
-      /* printf("%d => %d ACK {%d, %d, %d, %d, %d, %d, %d}\n", status.MPI_SOURCE, my_zone.id_noeud, donnees[0], donnees[1], donnees[2], donnees[3], donnees[4], donnees[5], donnees[6]); */
       return donnees[1];
     case MAJ_ZONE:
       printf("noeud %d : MAJ_ZONE reçu\n", my_zone.id_noeud);
-      /* printf("%d => %d MAJ_Z {%d, %d, %d, %d, %d, %d, %d}\n", status.MPI_SOURCE, my_zone.id_noeud, donnees[0], donnees[1], donnees[2], donnees[3], donnees[4], donnees[5], donnees[6]); */
       traiter_maj_zone(donnees[0], donnees[1], donnees[2], donnees[3], donnees[4]);
       break;
     case INIT_ZONE:
       printf("noeud %d : INIT_ZONE reçu\n", my_zone.id_noeud);
-      /* printf("%d => %d INIT_Z {%d, %d, %d, %d, %d, %d, %d}\n", status.MPI_SOURCE, my_zone.id_noeud, donnees[0], donnees[1], donnees[2], donnees[3], donnees[4], donnees[5], donnees[6]); */
       traiter_maj_zone(donnees[0], donnees[1], donnees[2], donnees[3], donnees[4]);
       break;
     case REQ_INSERE_TOI:
       printf("noeud %d : REQ_INSERE_TOI reçu\n", my_zone.id_noeud);
-      /* printf("%d => %d REQ INS TOI {%d, %d, %d, %d, %d, %d, %d}\n", status.MPI_SOURCE, my_zone.id_noeud, donnees[0], donnees[1], donnees[2], donnees[3], donnees[4], donnees[5], donnees[6]); */
       traiter_requete_insere_toi(donnees[0]);
       break;
     case REQ_INSERTION_NOEUD:
       printf("noeud %d : REQ_INSERTION_NOEUD reçu\n", my_zone.id_noeud);
-      /* printf("%d => %d REQ INS ND {%d, %d, %d, %d, %d, %d, %d}\n", status.MPI_SOURCE, my_zone.id_noeud, donnees[0], donnees[1], donnees[2], donnees[3], donnees[4], donnees[5], donnees[6]); */
       traiter_requete_insertion_noeud(donnees[0], donnees[1], donnees[2]);
       break;
     case REQ_INSERTION_VALEUR:
       printf("noeud %d : REQ_INSERTION_VALEUR reçu\n", my_zone.id_noeud);
-      /* printf("%d => %d REQ INS VALUE {%d, %d, %d, %d, %d, %d, %d}\n", status.MPI_SOURCE, my_zone.id_noeud, donnees[0], donnees[1], donnees[2], donnees[3], donnees[4], donnees[5], donnees[6]); */
       traiter_requete_insertion_valeur(donnees[0], donnees[1], donnees[2], donnees[3]);
       break;
     case REQ_RECHERCHE_VALEUR:
       printf("noeud %d : REQ_RECHERCHE_VALEUR reçu\n", my_zone.id_noeud);
-      /* printf("%d => %d REQ RECH VAL {%d, %d, %d, %d, %d, %d, %d}\n", status.MPI_SOURCE, my_zone.id_noeud, donnees[0], donnees[1], donnees[2], donnees[3], donnees[4], donnees[5], donnees[6]); */
       traiter_requete_recherche_valeur(donnees[0], donnees[1], donnees[2]);
-
       break;
     case EXPORT:
       printf("noeud %d : EXPORT reçu\n", my_zone.id_noeud);
-      /* printf("%d => %d XPORT {%d, %d, %d, %d, %d, %d, %d}\n", status.MPI_SOURCE, my_zone.id_noeud, donnees[0], donnees[1], donnees[2], donnees[3], donnees[4], donnees[5], donnees[6]); */
       traiter_export(donnees[0], donnees[1], donnees[2], donnees[3], donnees[4], donnees[5]);
       break;
     default:
-      /* printf("%d => %d UNKNOWN {%d, %d, %d, %d, %d, %d, %d}\n", status.MPI_SOURCE, my_zone.id_noeud, donnees[0], donnees[1], donnees[2], donnees[3], donnees[4], donnees[5], donnees[6]); */
       printf("NOEUD %d ERREUR TYPE MESSAGE %d\n", my_zone.id_noeud, status.MPI_TAG);
       break;
     }

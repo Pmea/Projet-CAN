@@ -110,7 +110,6 @@ void traiter_export(int jour, int mois, int annee, int heures, int minutes, int 
   sprintf(nomFichier, "%s%.2d_%.2d_%.2d_%.2d_%.2d_%.2d.html",
           PREFIXE_FICHIER, jour, mois, annee, heures, minutes, secondes);
 
-  /* printf("--%s--\n", nomFichier); */
   nd_left = my_x/2;
   nd_bottom = my_y/2;
   id = my_zone.id_noeud;

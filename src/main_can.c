@@ -13,16 +13,9 @@ void coordinateur(int nb_proc) {
     envoyer_message(i, data, REQ_INSERE_TOI);
     if(!attendreMessage())
       printf("\t\t\t\tInsertion échouée : noeud %d\n", i);
-    /* if(!tmp) { */
-    /*   /\* Le noeud n'a pas réussi à s'insérer *\/ */
-    /*   printf("\t\t\t\tLe noeud %d n'a pas été inséré\n", i); */
-    /* } else { */
-    /*   printf("\t\t\t\tLe noeud %d a été inséré\n", i); */
-    /* } */
     sprintf(titre, "Insertion du noeud %d", i);
     exporter(i, titre);
   }
-
 
   int valx;
   int valy;
@@ -51,7 +44,6 @@ void coordinateur(int nb_proc) {
   for(i=1; i<=nb_proc; i++) {
     envoyer_message(i, data, ACK);
   }
-  /* printf("Fin coord\n"); */
 }
 
 void noeud(int rang) {
@@ -59,27 +51,15 @@ void noeud(int rang) {
   my_y = rand() % (HAUTEUR_GRILLE+1);
   my_zone.id_noeud = rang;
   est_insere = false;
-/* <<<<<<< HEAD */
-  
-/*   gauche = creer_liste(NULL); */
-/*   bas = creer_liste(NULL); */
-/*   droite = creer_liste(NULL); */
-
-  /*MAIS OU EST PASSÉ MON HAUT ??????*/
-
-/* ======= */
-/* >>>>>>> 195c367bd37b909cac60d848082a471cca71ce35 */
   my_donnee= creer_liste_donnee(NULL);
   haut = creer_liste(NULL);
   droite = creer_liste(NULL);
   bas = creer_liste(NULL);
   gauche = creer_liste(NULL);
 
-
   printf("Début %d : (%d;%d)\n", rang, my_x, my_y);
   attendreMessage();
   printf("  Fin %d : (%d;%d)\n", rang, my_x, my_y);
-  /* printf("Fin noeud %d\n", rang); */
 
   afficher_liste_donnee_valeur(rang, my_donnee);
 
