@@ -31,7 +31,7 @@ void coordinateur(int nb_proc) {
 
   int save_val[10][2];
 
-  for(i=0 ; i<  nb_proc*10; i++){
+  for(i=0 ; i<  nb_proc*100; i++){
     valx= rand()% (LARGEUR_GRILLE+1);
     valy= rand()% (HAUTEUR_GRILLE+1);
     printf("DATA [%d;%d]\n", valx, valy);
@@ -114,7 +114,7 @@ int main(int argc, char* argv[]){
   MPI_Comm_size(MPI_COMM_WORLD, &nb_proc);
   MPI_Comm_rank(MPI_COMM_WORLD, &rang);
 
-  srand(time(NULL)*rang);
+  srand(time(NULL)*(rang+1));
 
   if(rang == 0) coordinateur(nb_proc - 1);
   else noeud(rang);
