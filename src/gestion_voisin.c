@@ -1,5 +1,6 @@
 #include "gestion_voisin.h"
 
+
 direction dequel_cote(zone* notre_zone, zone* a_placer) {
   if (a_placer->maxX < notre_zone->minX) {
     return GAUCHE;

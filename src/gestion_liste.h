@@ -23,10 +23,10 @@ void supprimer_element_liste(liste_zone liste, zone* zone_supp);
 // supprime la totalité de la liste
 void vider_liste(liste_zone liste);
 
-//dit si l'element est dans la liste
+//true si l'element est dans la liste
 bool est_dans_liste(liste_zone liste, zone* elem);
 
-// return true si les deux zones ont le même id
+//true si les deux zones ont le même id
 bool est_meme_element(zone* z1, zone* z2);
 
 

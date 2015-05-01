@@ -2,7 +2,12 @@
 
 #define NB_DIR 4
 
-// retourne l'id d'un noeud au hasard dans une liste de zone
+#define HAUT 0
+#define DROITE 1
+#define BAS 2
+#define GAUCHE 3
+
+// retourne une zone  pioche au hasard
 zone* zone_au_hasard_dans_liste(liste_zone liste){
 	int compt=0;
 	zone* curs= liste->prem;
@@ -10,8 +15,7 @@ zone* zone_au_hasard_dans_liste(liste_zone liste){
 		compt++;
 		curs= curs->next;
 	}
-        /* printf("LES CANARDS %d\n", compt); */
-        /* afficher_liste(liste); */
+
 	int choix= rand()% compt;
 	
 	curs= liste->prem;
@@ -20,7 +24,7 @@ zone* zone_au_hasard_dans_liste(liste_zone liste){
 	return curs;
 }
 
-// retourne la liste choisix pour piocher la zone au hasard
+// retourne une liste valide pioche au hasard
 liste_zone liste_au_hasard_dans_liste(bool *dir_possible){
 
 	int choix= rand()% 4; 
@@ -51,13 +55,13 @@ int routage(int x,  int y){
 	bool dir[NB_DIR]= {false};			// 0:haut, 1:droite, 2:bas, 3:gauche
 
 	if(x > my_zone.maxX )
-		dir[1]=true;
+		dir[DROITE]=true;
 	if(x < my_zone.minX )
-		dir[3]=true;
+		dir[GAUCHE]=true;
 	if(y > my_zone.maxY)
-		dir[0]=true;
+		dir[HAUT]=true;
 	if(y < my_zone.minY)
-		dir[2]=true;
+		dir[BAS]=true;
 
 	liste_zone ltmp= liste_au_hasard_dans_liste(dir);
 	zone * tmp= zone_au_hasard_dans_liste(ltmp);

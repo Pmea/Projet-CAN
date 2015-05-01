@@ -3,7 +3,7 @@
 
 donnee* get_donnee(liste_donnee liste, int x, int y){
 	if(liste == NULL){
-		printf("get donnee: liste ou donnee egale a NULL\n");
+		printf("Erreur: get donnee: liste egale a NULL\n");
 		exit(EXIT_FAILURE);
 	}
 	donnee* curs= liste->prem;

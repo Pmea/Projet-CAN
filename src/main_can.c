@@ -12,7 +12,7 @@ void coordinateur(int nb_proc) {
   for(i=1; i<=nb_proc; i++) {
     envoyer_message(i, data, REQ_INSERE_TOI);
     if(!attendreMessage())
-      printf("\t\t\t\tInsertion échouée : noeud %d\n", i);
+      printf("Insertion échouée : noeud %d\n", i);
     sprintf(titre, "Insertion du noeud %d", i);
     exporter(i, titre);
   }
@@ -23,6 +23,7 @@ void coordinateur(int nb_proc) {
 
   int save_val[10][2];
 
+  // on insert les donnees
   for(i=0 ; i<  nb_proc*10; i++){
     valx= rand()% (LARGEUR_GRILLE+1);
     valy= rand()% (HAUTEUR_GRILLE+1);
@@ -32,13 +33,15 @@ void coordinateur(int nb_proc) {
     data[1]= valx;
     data[2]= valy;
     data[3]= val_calcul;
-    //envoyer au bootstramp;
+
+    //envoyer demande au bootstramp;
     envoyer_message(BOOTSTRAP, data, REQ_INSERTION_VALEUR);
     attendreMessage();
 
     sprintf(titre, "Insertion de la valeur (%d;%d;%d)", valx, valy, val_calcul);
     exporter(nb_proc, titre);
 
+    // sauvegarde des valeurs
     if(i<5){
       save_val[i][0]=valx;
       save_val[i][1]=valy;
@@ -50,7 +53,7 @@ void coordinateur(int nb_proc) {
   }
 
   int valeur=0;
-  for(i=0; i<10; i++){
+  for(i=0; i<10; i++){      // recuperation valeur sauvegarde
       data[0]= COORDINATEUR;
       data[1]= save_val[i][0];
       data[2]= save_val[i][1];

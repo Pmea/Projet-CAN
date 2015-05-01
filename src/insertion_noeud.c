@@ -1,17 +1,17 @@
 #include "can.h"
 
-//la division marche 
+// Divise ma zone en deux, que je 
 void diviser(int id_noeud){
 	zone* new_zone= creer_zone(id_noeud, my_zone.minX, my_zone.maxX, my_zone.minY, my_zone.maxY, NULL);
 
-	if((my_zone.maxX - my_zone.minX) >= (my_zone.maxY - my_zone.minY) ){			// si largeur plus grand
-          //	printf("DECOUPAGE VERTICAL\n");
-		my_zone.maxX= my_zone.minX + (my_zone.maxX - my_zone.minX) / 2 - 1;
+	if((my_zone.maxX - my_zone.minX) >= (my_zone.maxY - my_zone.minY) ){			
+    // si largeur plus grand
+    // on decoupe verticalmeent
+		my_zone.maxX= my_zone.minX + (my_zone.maxX - my_zone.minX) / 2 - 1;    
 		new_zone->minX= my_zone.maxX + 1;
 
-		if( x_dans_zone(my_x) == false){
-			// on echange les espaces
-			int minXtmp= my_zone.minX;
+		if( x_dans_zone(my_x) == false){   // si je mes coordonnee ne sont pas dans la zone que je viens de decouper
+			int minXtmp= my_zone.minX;       // j'echange avec le noeud qui veut s'inserer
 			int maxXtmp= my_zone.maxX;
 
 			my_zone.maxX= new_zone->maxX;
@@ -23,7 +23,8 @@ void diviser(int id_noeud){
 	}
 
 	else{
-          //	printf("DECOUPAGE HORIZONTAL\n");
+    // si largeur plus grand
+    // on decoupe verticalmeent
 		my_zone.maxY= my_zone.minY +(my_zone.maxY- my_zone.minY) / 2 - 1;
 		new_zone->minY= my_zone.maxY + 1;
 
@@ -40,39 +41,43 @@ void diviser(int id_noeud){
 	}
 
 
-	// propagation de l'information
 	int msg[LEN_MAX_MSG]={ new_zone->id_noeud, new_zone->minX, new_zone->maxX, new_zone->minY, new_zone->maxY};	
-        // envoi les coordonnées au nouveau noeud
-        envoyer_message(new_zone->id_noeud, msg, INIT_ZONE);
+  // envoi les coordonnées au nouveau noeud
+  envoyer_message(new_zone->id_noeud, msg, INIT_ZONE);
 
+  // propagation de l'information a mes voisin
 	envoyer_msg_au_adjacent(gauche, new_zone, msg, MAJ_ZONE);
 	envoyer_msg_au_adjacent(droite, new_zone, msg, MAJ_ZONE);
 	envoyer_msg_au_adjacent(haut, new_zone, msg, MAJ_ZONE);
 	envoyer_msg_au_adjacent(bas, new_zone, msg, MAJ_ZONE);
 
-        msg[0]= my_zone.id_noeud;
-        msg[1]= my_zone.minX;
-        msg[2]= my_zone.maxX;
-        msg[3]= my_zone.minY;
-        msg[4]= my_zone.maxY;
-
-        envoyer_message(new_zone->id_noeud, msg, MAJ_ZONE);
+  // je donne mes coordonner au nouveau noeud
+  msg[0]= my_zone.id_noeud;
+  msg[1]= my_zone.minX;
+  msg[2]= my_zone.maxX;
+  msg[3]= my_zone.minY;
+  msg[4]= my_zone.maxY;
+  envoyer_message(new_zone->id_noeud, msg, MAJ_ZONE);
 
 	switch(dequel_cote(&my_zone, new_zone)){			
 		case DROITE:					// l'autre est a droite donc je suis a gauche
 			
-				envoyer_info_tous_adjacent_a_un(bas, new_zone, MAJ_ZONE);
+        // je lui envoi mes voisins qui son adjacent au nouveau noeud
+				envoyer_info_tous_adjacent_a_un(bas, new_zone, MAJ_ZONE);     
 				envoyer_info_tous_adjacent_a_un(haut, new_zone, MAJ_ZONE);
 
+        // je supprimer les voisins qui ne sont plus adjacent avec moi
 				supprimer_voisin_non_adjacent(bas, &my_zone);
 				supprimer_voisin_non_adjacent(haut, &my_zone);
 
+        // j'envoi ma coorodnnee au nouveau noeud pour qu'il m'ajoute a ses voisins
 				envoyer_tous_liste_a_un(new_zone, MAJ_ZONE, droite);
 
+        // je l'ajoute a mes voisins de droite comme ces lui maintenant mon unique voisin
 				vider_liste(droite);
 				ajouter_entete_liste(droite, new_zone);
 			break;
-		case GAUCHE:
+		case GAUCHE:           // idem mais pour les autres directions
 
 				envoyer_info_tous_adjacent_a_un(bas, new_zone, MAJ_ZONE);
 				envoyer_info_tous_adjacent_a_un(haut, new_zone, MAJ_ZONE);
@@ -116,7 +121,8 @@ void diviser(int id_noeud){
 			exit(EXIT_FAILURE);
 	}
 	
-	// dispatch  data
+	// Si nous voulions ajouter l'insertion de noeud apres la distribution de donnee, il faudrai faire
+  // une mise a jour des donnees, comme pour les voisins, pour savoir lesquelles j'envoi au nouveau noeud 
 }
 
 
@@ -192,8 +198,7 @@ bool traiter_requete_insertion_noeud(int id_noeud, int x, int y) {
   return true;
 }
 
-
-
+// tire un nouveau point dans la zone, si ses coordonné ne sont pas bonne 
 void tirer_point_dans_zone(){
   if( x_dans_zone(my_x) == false){
     my_x= rand() % ( my_zone.maxX - my_zone.minX + 1);
@@ -227,7 +232,6 @@ bool traiter_maj_zone(int noeud, int minX, int maxX, int minY, int maxY) {
 
     // si le point n'est pas dans ma zone
     if( point_dans_zone(my_x, my_y) == false){		   // on ne doit y passer qu'une seul fois
-      // on retir jusqu'a qu'il le soit
       tirer_point_dans_zone();
 
     }	
@@ -250,7 +254,7 @@ bool traiter_maj_zone(int noeud, int minX, int maxX, int minY, int maxY) {
       v = creer_zone(noeud, minX, maxX, minY, maxY, NULL);
       if(est_adjacent(&my_zone, v))
         ajouter_entete_liste(l, v);
-      else                      /* Ou pas */
+      else                     
         detruire_zone(v);
     }
   }
@@ -259,6 +263,7 @@ bool traiter_maj_zone(int noeud, int minX, int maxX, int minY, int maxY) {
 }
 
 
+/* DEBUG */
 /*
 int main(int argc, char* argv[]){				// fonction de test
 	printf("Fonction de test\n");

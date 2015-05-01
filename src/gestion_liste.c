@@ -1,7 +1,6 @@
 #include "gestion_liste.h"
 
 liste_zone creer_liste(zone * prem){
-	// TODO
 	liste_zone l= malloc(sizeof(struct liste_zone_t));
 	l->prem= prem;
 	return l;
@@ -100,58 +99,3 @@ void afficher_liste(liste_zone liste){
 	printf("----------------\n");
 
 }
-/*
-int main(int argc, char* argv[]){
-	printf("TEST unitaire\n");
-	srand(time(NULL));
-
-
-	liste_zone liste=creer_liste(NULL);
-	zone* tmp, *tmp2;
-	tmp= creer_zone(1,rand()%100,rand()%100,rand()%100,rand()%100, NULL);
-	tmp2= creer_zone(1,rand()%100,rand()%100,rand()%100,rand()%100, NULL);
-
-
-	if(est_meme_element(tmp2, tmp)== true){
-		printf("EST MEME ELEM\n");
-	}
-	else{
-		printf("N'EST PAS MEME ELEM\n");
-	}
-
-	afficher_zone(tmp);
-	ajouter_entete_liste(liste, tmp);
-	afficher_liste(liste);
-	ajouter_entete_liste(liste, tmp2);
-	afficher_liste(liste);
-
-	if(est_dans_liste(liste, tmp)== true){
-		printf("EST DANS LA LISTE\n");
-	}
-	else{
-		printf("N'EST PAS DANS LA LISTE\n");
-	}
-
-	if(est_dans_liste(liste, tmp)== true){
-		printf("EST DANS LA LISTE\n");
-	}
-	else{
-		printf("N'EST PAS DANS LA LISTE\n");
-	}
-
-	supprimer_entete_liste(liste);
-
-	if(est_dans_liste(liste, tmp)== true){
-		printf("EST DANS LA LISTE\n");
-	}
-	else{
-		printf("N'EST PAS DANS LA LISTE\n");
-	}
-
-	detruire_liste(liste);
-
-	printf("Fin test unitaire\n");
-	return EXIT_SUCCESS;
-}
-
-*/

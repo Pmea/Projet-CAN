@@ -6,7 +6,6 @@ void boardcast_element_a_liste(zone* elem, int tag_msg, liste_zone liste){
 
 	while(curs != NULL){
 		MPI_Send(msg, LEN_MAX_MSG, MPI_INT, curs->id_noeud, tag_msg, MPI_COMM_WORLD);
-		/* printf("envoi msg[%d:%d:%d:%d:%d] à %d\n",elem->id_noeud, elem->minX, elem->maxX, elem->minY, elem->maxY, elem->id_noeud); */
 		curs= curs->next;
 	}
 }
@@ -23,7 +22,6 @@ void envoyer_tous_liste_a_un(zone* dest, int tag_msg, liste_zone a_envoyer){
 		msg[4]=curs->maxY;
 
 		MPI_Send(msg, LEN_MAX_MSG, MPI_INT, dest->id_noeud, tag_msg, MPI_COMM_WORLD);
-		/* printf("envoi msg[%d:%d:%d:%d:%d] a %d\n",curs->id_noeud, curs->minX, curs->maxX, curs->minY, curs->maxY, dest->id_noeud); */
 		curs= curs->next;
 	}
 
@@ -36,8 +34,6 @@ void envoyer_msg_au_adjacent(liste_zone lz, zone* z,  int* msg, int tag_msg){
 	while(curs != NULL){
 		if(est_adjacent(z, curs) == true){
 			MPI_Send(msg, LEN_MAX_MSG, MPI_INT, curs->id_noeud, tag_msg, MPI_COMM_WORLD);
-			/* printf("envoi msg[%d:%d:%d:%d:%d] a %d\n",msg[0], msg[1], msg[2], msg[3], msg[4], curs->id_noeud); */
-
 		}
 		curs= curs->next;
 	}
@@ -56,8 +52,6 @@ void envoyer_info_tous_adjacent_a_un(liste_zone liste, zone* dest, int tag_msg){
 			msg[4]=curs->maxY;
 		      
 			MPI_Send(msg, LEN_MAX_MSG, MPI_INT, dest->id_noeud, tag_msg, MPI_COMM_WORLD);
-			/* printf("envoi msg[%d:%d:%d:%d:%d] a %d\n",curs->id_noeud, curs->minX, curs->maxX, curs->minY, curs->maxY, dest->id_noeud); */
-
 		}
 
 		curs= curs->next;
@@ -72,7 +66,7 @@ int attendreMessage(void) {
   MPI_Status status;
   int donnees[LEN_MAX_MSG];
   
-  /* SAUF !! dans le cas initial, où on veux recevoir des messages à vie (et
+  /* Sauf dans le cas initial, où on veux recevoir des messages à vie (et
      donc on ne recevra pas de ACK), la seule possibilitée de sortie est de
      recevoir un ack puisque si on entre dans attendreMessage, c'est qu'on
      attends une réponse  */

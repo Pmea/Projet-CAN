@@ -16,6 +16,7 @@
 #define HAUTEUR_GRILLE 1000
 #define LARGEUR_GRILLE 1000
 
+// structure connu par les fonctions du programme 
 typedef struct donnee_t {
   int data;
   int x, y;
@@ -55,6 +56,7 @@ typedef enum direction_e{
   BAS
 } direction;
 
+// un processus a un zone, une coordonnee, 4 listes de voisins et une liste de donnee
 zone my_zone;
 int my_x;
 int my_y;
@@ -62,7 +64,7 @@ bool est_insere;
 liste_donnee my_donnee;
 liste_zone gauche, bas, droite, haut;
 
-// les includes sont en dessous des typedef pour ne pas avoir de probleme de type
+
 #include "gestion_liste.h"
 #include "gestion_voisin.h"
 #include "gestion_com.h"
@@ -70,9 +72,8 @@ liste_zone gauche, bas, droite, haut;
 #include "graphique.h"
 #include "gestion_donnees.h"
 
+
 void diviser(int noeud);
-
-
 bool traiter_requete_insere_toi(int nd_init);
 bool traiter_requete_insertion_noeud(int id_noeud, int x, int y);
 bool traiter_requete_insertion_valeur(int nd_init, int x, int y, int val);
