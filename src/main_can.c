@@ -23,7 +23,7 @@ void coordinateur(int nb_proc) {
 
   int save_val[10][2];
 
-  for(i=0 ; i<  nb_proc*100; i++){
+  for(i=0 ; i<  nb_proc*10; i++){
     valx= rand()% (LARGEUR_GRILLE+1);
     valy= rand()% (HAUTEUR_GRILLE+1);
     printf("DATA [%d;%d]\n", valx, valy);
@@ -35,6 +35,9 @@ void coordinateur(int nb_proc) {
     //envoyer au bootstramp;
     envoyer_message(BOOTSTRAP, data, REQ_INSERTION_VALEUR);
     attendreMessage();
+
+    sprintf(titre, "Insertion de la valeur (%d;%d;%d)", valx, valy, val_calcul);
+    exporter(nb_proc, titre);
 
     if(i<5){
       save_val[i][0]=valx;
@@ -54,10 +57,13 @@ void coordinateur(int nb_proc) {
 
       envoyer_message(BOOTSTRAP, data, REQ_RECHERCHE_VALEUR);
       valeur= attendreMessage();
-     if(valeur != -1){
-      sprintf(titre, "Insertion de la valeur (%d;%d;%d)", valx, valy, val_calcul);
-      exporter(nb_proc, titre);
-    }
+     if(valeur == -1){
+      printf("Erreur donnée absante");
+      exit(EXIT_FAILURE);
+     }
+     else{
+      printf("Valeur trouvé: (%d;%d;%d)\n", data[1], data[2],valeur);
+     }   
   }
 
   terminer_export();
