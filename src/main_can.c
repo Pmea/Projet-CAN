@@ -2,28 +2,20 @@
 
 void coordinateur(int nb_proc) {
   int data[LEN_MAX_MSG];
-  /* int timestamp[LEN_MAX_MSG]; */
   int i;
   char titre[1024];
 
   initialiser_export();
-  /* timestamp[0] = jour; */
-  /* timestamp[1] = mois; */
-  /* timestamp[2] = annee; */
-  /* timestamp[3] = heures; */
-  /* timestamp[4] = minutes; */
-  /* timestamp[5] = secondes; */
 
   data[0] = COORDINATEUR;
   /* Insertion des noeuds */
   for(i=1; i<=nb_proc; i++) {
     envoyer_message(i, data, REQ_INSERE_TOI);
-    attendreMessage();
-    sprintf(titre, "Insertion de %d", i);
+    if(!attendreMessage())
+      printf("\t\t\t\tInsertion échouée : noeud %d\n", i);
+    sprintf(titre, "Insertion du noeud %d", i);
     exporter(i, titre);
   }
-  terminer_export();
-  
 
   int valx;
   int valy;
@@ -56,44 +48,40 @@ void coordinateur(int nb_proc) {
 
   int valeur=0;
   for(i=0; i<10; i++){
-    data[0]= COORDINATEUR;
-    data[1]= save_val[i][0];
-    data[2]= save_val[i][1];
+      data[0]= COORDINATEUR;
+      data[1]= save_val[i][0];
+      data[2]= save_val[i][1];
 
-    envoyer_message(BOOTSTRAP, data, REQ_RECHERCHE_VALEUR);
-    valeur= attendreMessage();
-   if(valeur != -1)
-      printf("[%d;%d]=>%d\n", save_val[i][0], save_val[i][1], valeur);
+      envoyer_message(BOOTSTRAP, data, REQ_RECHERCHE_VALEUR);
+      valeur= attendreMessage();
+     if(valeur != -1){
+      sprintf(titre, "Insertion de la valeur (%d;%d;%d)", valx, valy, val_calcul);
+      exporter(nb_proc, titre);
+    }
   }
 
+  terminer_export();
+  
   // fin du programme 
   for(i=1; i<=nb_proc; i++) {
     envoyer_message(i, data, ACK);
-  }
-  /* printf("Fin coord\n"); */
-
-  for(i=0; i<10;i++){
-    printf("%d:%d\n", save_val[i][0], save_val[i][1]);
   }
 }
 
 void noeud(int rang) {
   my_x = rand() % (LARGEUR_GRILLE+1); 
-   my_y = rand() % (HAUTEUR_GRILLE+1); 
+  my_y = rand() % (HAUTEUR_GRILLE+1);
   my_zone.id_noeud = rang;
-
+  est_insere = false;
   my_donnee= creer_liste_donnee(NULL);
-
   haut = creer_liste(NULL);
   droite = creer_liste(NULL);
   bas = creer_liste(NULL);
   gauche = creer_liste(NULL);
 
-
   printf("Début %d : (%d;%d)\n", rang, my_x, my_y);
   attendreMessage();
   printf("  Fin %d : (%d;%d)\n", rang, my_x, my_y);
-  /* printf("Fin noeud %d\n", rang); */
 
   afficher_liste_donnee_valeur(rang, my_donnee);
 

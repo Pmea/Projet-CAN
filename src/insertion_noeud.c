@@ -40,17 +40,8 @@ void diviser(int id_noeud){
 	}
 
 
-	/* afficher_zone(&my_zone); */
-	/* afficher_zone(new_zone); */
-
 	// propagation de l'information
 	int msg[LEN_MAX_MSG]={ new_zone->id_noeud, new_zone->minX, new_zone->maxX, new_zone->minY, new_zone->maxY};	
-        /*   printf("gauche : %p\n", gauche);
-        printf("droite : %p\n", droite);
-        printf("bas : %p\n", bas);
-        printf("haut : %p\n", haut);
-        */
-
         // envoi les coordonnées au nouveau noeud
         envoyer_message(new_zone->id_noeud, msg, INIT_ZONE);
 
@@ -66,8 +57,6 @@ void diviser(int id_noeud){
         msg[4]= my_zone.maxY;
 
         envoyer_message(new_zone->id_noeud, msg, MAJ_ZONE);
-
-        /* printf("maj_zone envoyé à %d !!\n", new_zone->id_noeud); */
 
 	switch(dequel_cote(&my_zone, new_zone)){			
 		case DROITE:					// l'autre est a droite donc je suis a gauche
@@ -145,23 +134,30 @@ bool traiter_requete_insere_toi(int nd_init) {
     my_zone.maxX = LARGEUR_GRILLE;
     my_zone.minY = 0;
     my_zone.maxY = HAUTEUR_GRILLE;
+    data[1] = 1;
   } else {
     /* Envoyer la requête d'insertion de noeud et attendre l'ACK */
     data[0] = my_zone.id_noeud;
     data[1] = my_x;
     data[2] = my_y;
     envoyer_message(BOOTSTRAP, data, REQ_INSERTION_NOEUD);
-    attendreMessage();
+    data[1] = attendreMessage();
   }
 
-  /* afficher_zone(&my_zone); */
-
-  /* Envoyer l'ACK */
+  if(data[1])
+    est_insere = true;
+  /* Envoyer l'ACK. Si l'insertion a échouée data[0] vaut faux */
+  data[0] = COORDINATEUR;
   envoyer_message(COORDINATEUR, data, ACK);
   return true;
 }
 
-
+/* Retourne vrai si la zone est assez grande pour être divisée */
+bool est_divisible_zone(zone *z) {
+  if(z->maxX - z->minX > 1 || z->maxY - z->minY > 1)
+    return true;
+  return false;
+}
 
 bool traiter_requete_insertion_noeud(int id_noeud, int x, int y) {
   /* Si le noeud c'est moi dans mon espace=> je me divise (les voisins seront mis à jour) et
@@ -169,21 +165,29 @@ bool traiter_requete_insertion_noeud(int id_noeud, int x, int y) {
      voisin) */
 
   if(point_dans_zone(x,y) == true){
-  	diviser(id_noeud);
-  	int msgUseless[LEN_MAX_MSG]={0};
+
+    /* Si la zone n'est pas divisible, on retourne faux au noeud qui cherche à
+       s'insérer  */
+    if(!est_divisible_zone(&my_zone)) {
+      int msg[LEN_MAX_MSG];
+      msg[0] = id_noeud;
+      msg[1] = 0;
+      envoyer_message(id_noeud, msg, ACK);
+      return false;
+    }
+    diviser(id_noeud);
+    int msgUseless[LEN_MAX_MSG]={0};
     msgUseless[0]= id_noeud;
-    msgUseless[1]= 1;
-  	envoyer_message(id_noeud, msgUseless, ACK);
+    msgUseless[1] = 1;
+    envoyer_message(id_noeud, msgUseless, ACK);
   }
-    /* Sinon, je cherche à qui je devrai envoyer le message (avec router) et je
+  /* Sinon, je cherche à qui je devrai envoyer le message (avec router) et je
      lui envoie un message "REQ_INSERTION_NOEUD" avec id_noeud, x et y */
   else{
-  	int id_route= routage(x,y);
-  	int msg[LEN_MAX_MSG]={id_noeud, x, y};
-  	envoyer_message(id_route, msg, REQ_INSERTION_NOEUD);
+    int id_route= routage(x,y);
+    int msg[LEN_MAX_MSG]={id_noeud, x, y};
+    envoyer_message(id_route, msg, REQ_INSERTION_NOEUD);
   }
-
-  /* afficher_zone(&my_zone); */
 
   return true;
 }
@@ -192,11 +196,11 @@ bool traiter_requete_insertion_noeud(int id_noeud, int x, int y) {
 
 void tirer_point_dans_zone(){
   if( x_dans_zone(my_x) == false){
-    my_x= rand() % ( my_zone.maxX - my_zone.minX);
+    my_x= rand() % ( my_zone.maxX - my_zone.minX + 1);
     my_x+= my_zone.minX;
   }
   if( y_dans_zone(my_y) == false){
-    my_y= rand() %  (my_zone.maxY - my_zone.minY);
+    my_y= rand() %  (my_zone.maxY - my_zone.minY + 1);
     my_y+= my_zone.minY;
   }
 }
@@ -206,7 +210,7 @@ void tirer_point_dans_zone(){
 /* 
    Si l'id est le notre, on mets à jour nos propres valeurs.  
    Si l'id est celui d'un voisin, on mets à jour le voisin et on le supprime si
-     ce n'en est plus un 
+   ce n'en est plus un 
    Si l'id n'est pas un voisin, on le créé et on l'ajoute si c'est effectivement
    un voisin
 */
@@ -223,12 +227,10 @@ bool traiter_maj_zone(int noeud, int minX, int maxX, int minY, int maxY) {
 
     // si le point n'est pas dans ma zone
     if( point_dans_zone(my_x, my_y) == false){		   // on ne doit y passer qu'une seul fois
-    	// on retir jusqu'a qu'il le soit
-      //  printf("\t \t \t  %d avant: %d:%d", my_zone.id_noeud, my_x, my_y);
-		tirer_point_dans_zone();
-                // printf("\t \t \t %d avant: %d:%d", my_zone.id_noeud, my_x, my_y);
+      // on retir jusqu'a qu'il le soit
+      tirer_point_dans_zone();
 
-	}	
+    }	
   } else {
     // Cas ou on mets à jour un voisin 
     l = get_liste_zone_par_coor(minX, maxX, minY, maxY);

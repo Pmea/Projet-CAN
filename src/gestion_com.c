@@ -77,7 +77,6 @@ int attendreMessage(void) {
      recevoir un ack puisque si on entre dans attendreMessage, c'est qu'on
      attends une réponse  */
   while(1) {
-    /* printf("noeud %d : attendre message\n", my_zone.id_noeud); */
     MPI_Recv(&donnees, LEN_MAX_MSG, MPI_INT, MPI_ANY_SOURCE, MPI_ANY_TAG, MPI_COMM_WORLD, &status);
 
     switch(status.MPI_TAG) {
@@ -85,7 +84,7 @@ int attendreMessage(void) {
       /* Si une valeur est présente, on la renvoie. S'il n'y a pas de valeur, on
          la renvoie quand même. Elle sera non pertinente et ignorée par la
          fonction appelante qui ne cherche pas de retour */
-      printf("noeud %d : ACK reçu\n", my_zone.id_noeud);
+      printf("noeud %d : ACK reçu (%d)\n", my_zone.id_noeud, donnees[1]);
       return donnees[1];
     case MAJ_ZONE:
       printf("noeud %d : MAJ_ZONE reçu\n", my_zone.id_noeud);
@@ -110,11 +109,13 @@ int attendreMessage(void) {
     case REQ_RECHERCHE_VALEUR:
       printf("noeud %d : REQ_RECHERCHE_VALEUR reçu\n", my_zone.id_noeud);
       traiter_requete_recherche_valeur(donnees[0], donnees[1], donnees[2]);
-
       break;
     case EXPORT:
       printf("noeud %d : EXPORT reçu\n", my_zone.id_noeud);
       traiter_export(donnees[0], donnees[1], donnees[2], donnees[3], donnees[4], donnees[5]);
+      break;
+    default:
+      printf("NOEUD %d ERREUR TYPE MESSAGE %d\n", my_zone.id_noeud, status.MPI_TAG);
       break;
     }
   }
