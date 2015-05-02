@@ -1,3 +1,7 @@
+Le projet a été fait par
+Pierre MAHÉ
+Antoine LOHÉAC
+
 Avancement du projet :
 L'insertion de noeud est terminée
 L'insertion de valeur est terminée
