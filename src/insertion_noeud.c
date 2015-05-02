@@ -150,10 +150,11 @@ bool traiter_requete_insere_toi(int nd_init) {
     data[1] = attendreMessage();
   }
 
+  /* Mettre à jour son état si l'insertion a réussie */
   if(data[1])
     est_insere = true;
-  /* Envoyer l'ACK. Si l'insertion a échouée data[0] vaut faux */
   data[0] = COORDINATEUR;
+  /* data[1] représente toujours le succès de l'insertion */
   envoyer_message(COORDINATEUR, data, ACK);
   return true;
 }
@@ -166,9 +167,9 @@ bool est_divisible_zone(zone *z) {
 }
 
 bool traiter_requete_insertion_noeud(int id_noeud, int x, int y) {
-  /* Si le noeud c'est moi dans mon espace=> je me divise (les voisins seront mis à jour) et
-     j'envoie un message de type "ACK" au coordinateur (qui est maintenant un
-     voisin) */
+  /* Si le noeud veut s'insérer dans mon espace => je me divise (la division
+     mets à jours les voisins) et j'envoie un ACK au nouveau noeud (qui est
+     maintenant mon voisin) */
 
   if(point_dans_zone(x,y) == true){
 
@@ -198,7 +199,7 @@ bool traiter_requete_insertion_noeud(int id_noeud, int x, int y) {
   return true;
 }
 
-// tire un nouveau point dans la zone, si ses coordonné ne sont pas bonne 
+// tire un nouveau point dans la zone, si ses coordonnées ne sont pas bonnes
 void tirer_point_dans_zone(){
   if( x_dans_zone(my_x) == false){
     my_x= rand() % ( my_zone.maxX - my_zone.minX + 1);
@@ -231,7 +232,7 @@ bool traiter_maj_zone(int noeud, int minX, int maxX, int minY, int maxY) {
     my_zone.maxY = maxY;
 
     // si le point n'est pas dans ma zone
-    if( point_dans_zone(my_x, my_y) == false){		   // on ne doit y passer qu'une seul fois
+    if( point_dans_zone(my_x, my_y) == false){		   // on ne peut y passer qu'une seul fois
       tirer_point_dans_zone();
 
     }	

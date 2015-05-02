@@ -61,7 +61,7 @@ void coordinateur(int nb_proc) {
       envoyer_message(BOOTSTRAP, data, REQ_RECHERCHE_VALEUR);
       valeur= attendreMessage();
      if(valeur == -1){
-      printf("Erreur donnée absante");
+      printf("Erreur donnée absente\n");
       exit(EXIT_FAILURE);
      }
      else{
@@ -69,9 +69,24 @@ void coordinateur(int nb_proc) {
      }   
   }
 
+  printf("Recherche aléatoire de valeurs qui n'existent sûrement pas\n");
+  for(i=0; i<4; i++) {
+    data[0] = COORDINATEUR;
+    data[1] = rand()%1001;
+    data[2] = rand()%1001;
+    printf("Recherche d'une valeur à [%d;%d]\n", data[1], data[2]);
+    envoyer_message(BOOTSTRAP, data, REQ_RECHERCHE_VALEUR);
+    valeur= attendreMessage();
+    if(valeur == -1)
+      printf("Donnée absente\n");
+    else
+      printf("Valeur trouvé: (%d;%d;%d)\n", data[1], data[2],valeur);
+  }
+
   terminer_export();
   
-  // fin du programme 
+  // fin du programme, le ACK provoquera la sortie de la boucle infinie des
+  // noeuds en attente d'un message
   for(i=1; i<=nb_proc; i++) {
     envoyer_message(i, data, ACK);
   }
@@ -111,6 +126,8 @@ int main(int argc, char* argv[]){
   MPI_Comm_size(MPI_COMM_WORLD, &nb_proc);
   MPI_Comm_rank(MPI_COMM_WORLD, &rang);
 
+  /* rang+1 pour le cas du coordinateur qui sinon aura toujours une graine
+     valanat 0 */
   srand(time(NULL)*(rang+1));
 
   if(rang == 0) coordinateur(nb_proc - 1);
