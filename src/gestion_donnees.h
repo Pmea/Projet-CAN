@@ -9,7 +9,7 @@ liste_donnee creer_liste_donnee(donnee*  prem);
 void detruire_liste_donnee(liste_donnee liste);
 
 donnee* creer_donnee(int a, int b, int data, donnee* next);
-// a t'utiliser uniquement si l'element n'est pas dans une liste
+// a utiliser uniquement si l'element n'est pas dans une liste
 void detruire_donnee(donnee *d);
 
 

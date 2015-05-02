@@ -2,10 +2,6 @@
 
 #define NB_DIR 4
 
-#define HAUT 0
-#define DROITE 1
-#define BAS 2
-#define GAUCHE 3
 
 // retourne une zone  pioche au hasard
 zone* zone_au_hasard_dans_liste(liste_zone liste){
@@ -36,13 +32,13 @@ liste_zone liste_au_hasard_dans_liste(bool *dir_possible){
 	}
 
 	switch((choix+inc)%4){
-		case 0:
+		case HAUT:
 			return haut;
-		case 1:
+		case DROITE:
 			return droite;
-		case 2:
+		case BAS:
 			return bas;
-		case 3:
+		case GAUCHE:
 			return gauche;
 		default:
 			printf("Erreur, de choix de liste\n");

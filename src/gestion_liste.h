@@ -8,7 +8,7 @@ liste_zone creer_liste(zone * prem);
 void detruire_liste(liste_zone liste);
 
 zone* creer_zone(int id_noeud, int minX, int maxX, int minY, int maxY, zone * next);
-// a t'utiliser que si l'element n'est pas dans une liste
+// a utiliser que si l'element n'est pas dans une liste
 void detruire_zone(zone * z);
 
 //ajoute element en tete de la liste
